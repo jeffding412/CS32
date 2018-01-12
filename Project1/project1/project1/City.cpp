@@ -8,6 +8,8 @@
 
 #include "City.h"
 #include "globals.h"
+#include "Player.h"
+#include "Flatulan.h"
 #include <iostream>
 #include <cstdlib>
 using namespace std;

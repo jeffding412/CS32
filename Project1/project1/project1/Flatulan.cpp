@@ -11,6 +11,7 @@
 #include <iostream>
 #include <cstdlib>
 #include "City.h"
+#include "Player.h"
 using namespace std;
 
 ///////////////////////////////////////////////////////////////////////////

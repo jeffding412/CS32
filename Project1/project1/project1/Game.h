@@ -9,7 +9,7 @@
 #ifndef Game_h
 #define Game_h
 
-#include "City.h"
+class City;
 
 int decodeDirection(char dir);
 

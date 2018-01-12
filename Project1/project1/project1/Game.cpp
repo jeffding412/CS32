@@ -11,6 +11,8 @@
 #include <iostream>
 #include <cstdlib>
 #include <string>
+#include "City.h"
+#include "Player.h"
 using namespace std;
 
 int decodeDirection(char dir)
