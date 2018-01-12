@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A9205F51200971E10055CE30 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9205F50200971E10055CE30 /* main.cpp */; };
+		A9205F5B200975020055CE30 /* Cylinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9205F5A200975020055CE30 /* Cylinder.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +26,7 @@
 /* Begin PBXFileReference section */
 		A9205F4D200971E10055CE30 /* Cylinder */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Cylinder; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9205F50200971E10055CE30 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		A9205F5A200975020055CE30 /* Cylinder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Cylinder.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +60,7 @@
 			isa = PBXGroup;
 			children = (
 				A9205F50200971E10055CE30 /* main.cpp */,
+				A9205F5A200975020055CE30 /* Cylinder.cpp */,
 			);
 			path = Cylinder;
 			sourceTree = "<group>";
@@ -120,6 +123,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A9205F51200971E10055CE30 /* main.cpp in Sources */,
+				A9205F5B200975020055CE30 /* Cylinder.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
