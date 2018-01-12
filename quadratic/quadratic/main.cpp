@@ -7,9 +7,11 @@
 //
 
 #include <iostream>
+#include "quadratic.h"
+using namespace std;
 
-int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
-    return 0;
+int main()
+{
+    quadratic q(4, 3, 5);
+    cout << q.evaluate(2) << endl;
 }
