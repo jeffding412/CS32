@@ -13,6 +13,7 @@
 		A9205F3A20085FE90055CE30 /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9205F3820085FE90055CE30 /* Player.cpp */; };
 		A9205F3D200860E40055CE30 /* City.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9205F3B200860E40055CE30 /* City.cpp */; };
 		A9205F40200861FE0055CE30 /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9205F3E200861FE0055CE30 /* Game.cpp */; };
+		A9205F43200870A10055CE30 /* History.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9205F41200870A10055CE30 /* History.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -40,6 +41,8 @@
 		A9205F3C200860E40055CE30 /* City.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = City.h; sourceTree = "<group>"; };
 		A9205F3E200861FE0055CE30 /* Game.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Game.cpp; sourceTree = "<group>"; };
 		A9205F3F200861FE0055CE30 /* Game.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
+		A9205F41200870A10055CE30 /* History.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = History.cpp; sourceTree = "<group>"; };
+		A9205F42200870A10055CE30 /* History.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = History.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +76,8 @@
 			isa = PBXGroup;
 			children = (
 				A9205F2B200841DF0055CE30 /* main.cpp */,
+				A9205F41200870A10055CE30 /* History.cpp */,
+				A9205F42200870A10055CE30 /* History.h */,
 				A9205F3E200861FE0055CE30 /* Game.cpp */,
 				A9205F3F200861FE0055CE30 /* Game.h */,
 				A9205F3B200860E40055CE30 /* City.cpp */,
@@ -150,6 +155,7 @@
 				A9205F40200861FE0055CE30 /* Game.cpp in Sources */,
 				A9205F2C200841DF0055CE30 /* main.cpp in Sources */,
 				A9205F3D200860E40055CE30 /* City.cpp in Sources */,
+				A9205F43200870A10055CE30 /* History.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
