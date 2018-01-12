@@ -11,6 +11,8 @@
 
 #include "City.h"
 
+int decodeDirection(char dir);
+
 class Game
 {
 public:
