@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		A9205F2C200841DF0055CE30 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9205F2B200841DF0055CE30 /* main.cpp */; };
+		A9205F3420085AE80055CE30 /* Flatulan.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9205F3220085AE80055CE30 /* Flatulan.cpp */; };
+		A9205F3720085B650055CE30 /* utilities.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9205F3520085B650055CE30 /* utilities.cpp */; };
+		A9205F3A20085FE90055CE30 /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9205F3820085FE90055CE30 /* Player.cpp */; };
+		A9205F3D200860E40055CE30 /* City.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9205F3B200860E40055CE30 /* City.cpp */; };
+		A9205F40200861FE0055CE30 /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9205F3E200861FE0055CE30 /* Game.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +30,16 @@
 /* Begin PBXFileReference section */
 		A9205F28200841DF0055CE30 /* project1 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = project1; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9205F2B200841DF0055CE30 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		A9205F3220085AE80055CE30 /* Flatulan.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Flatulan.cpp; sourceTree = "<group>"; };
+		A9205F3320085AE80055CE30 /* Flatulan.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Flatulan.h; sourceTree = "<group>"; };
+		A9205F3520085B650055CE30 /* utilities.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = utilities.cpp; sourceTree = "<group>"; };
+		A9205F3620085B650055CE30 /* global.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = global.h; sourceTree = "<group>"; };
+		A9205F3820085FE90055CE30 /* Player.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Player.cpp; sourceTree = "<group>"; };
+		A9205F3920085FE90055CE30 /* Player.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
+		A9205F3B200860E40055CE30 /* City.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = City.cpp; sourceTree = "<group>"; };
+		A9205F3C200860E40055CE30 /* City.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = City.h; sourceTree = "<group>"; };
+		A9205F3E200861FE0055CE30 /* Game.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Game.cpp; sourceTree = "<group>"; };
+		A9205F3F200861FE0055CE30 /* Game.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +73,16 @@
 			isa = PBXGroup;
 			children = (
 				A9205F2B200841DF0055CE30 /* main.cpp */,
+				A9205F3E200861FE0055CE30 /* Game.cpp */,
+				A9205F3F200861FE0055CE30 /* Game.h */,
+				A9205F3B200860E40055CE30 /* City.cpp */,
+				A9205F3C200860E40055CE30 /* City.h */,
+				A9205F3820085FE90055CE30 /* Player.cpp */,
+				A9205F3920085FE90055CE30 /* Player.h */,
+				A9205F3520085B650055CE30 /* utilities.cpp */,
+				A9205F3620085B650055CE30 /* global.h */,
+				A9205F3220085AE80055CE30 /* Flatulan.cpp */,
+				A9205F3320085AE80055CE30 /* Flatulan.h */,
 			);
 			path = project1;
 			sourceTree = "<group>";
@@ -119,7 +144,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9205F3A20085FE90055CE30 /* Player.cpp in Sources */,
+				A9205F3720085B650055CE30 /* utilities.cpp in Sources */,
+				A9205F3420085AE80055CE30 /* Flatulan.cpp in Sources */,
+				A9205F40200861FE0055CE30 /* Game.cpp in Sources */,
 				A9205F2C200841DF0055CE30 /* main.cpp in Sources */,
+				A9205F3D200860E40055CE30 /* City.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
