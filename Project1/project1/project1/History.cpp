@@ -7,7 +7,7 @@
 //
 
 #include "History.h"
-#include "global.h"
+#include "globals.h"
 #include <iostream>
 using namespace std;
 

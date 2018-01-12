@@ -7,7 +7,7 @@
 //
 
 #include "Game.h"
-#include "global.h"
+#include "globals.h"
 #include <iostream>
 #include <cstdlib>
 #include <string>

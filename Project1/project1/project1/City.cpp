@@ -7,7 +7,7 @@
 //
 
 #include "City.h"
-#include "global.h"
+#include "globals.h"
 #include <iostream>
 #include <cstdlib>
 using namespace std;

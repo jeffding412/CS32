@@ -9,7 +9,7 @@
 #ifndef City_h
 #define City_h
 
-#include "global.h"
+#include "globals.h"
 #include "Player.h"
 #include "Flatulan.h"
 #include "History.h"

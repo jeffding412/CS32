@@ -7,7 +7,7 @@
 //
 
 #include "Player.h"
-#include "global.h"
+#include "globals.h"
 #include <iostream>
 #include <cstdlib>
 #include "City.h"

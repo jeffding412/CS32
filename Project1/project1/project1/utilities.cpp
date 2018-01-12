@@ -6,7 +6,7 @@
 //  Copyright © 2018 Jeffrey Ding. All rights reserved.
 //
 
-#include "global.h"
+#include "globals.h"
 #include <random>
 #include <utility>
 using namespace std;

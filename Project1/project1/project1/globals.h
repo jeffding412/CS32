@@ -6,8 +6,8 @@
 //  Copyright © 2018 Jeffrey Ding. All rights reserved.
 //
 
-#ifndef global_h
-#define global_h
+#ifndef globals_h
+#define globals_h
 
 ///////////////////////////////////////////////////////////////////////////
 // Manifest constants
@@ -31,4 +31,4 @@ const int NUMDIRS = 4;
 int randInt(int min, int max);
 void clearScreen();
 
-#endif /* global_h */
+#endif /* globals_h */
