@@ -19,3 +19,15 @@ History::History(int nRows, int nCols)
         }
     }
 }
+
+bool History::record(int r, int c)
+{
+    if (r < 1 || c < 1 || r >= MAXROWS || c >= MAXCOLS) {
+        return false;
+    }
+    
+    historyGrid[r-1][c-1]++;
+    return true;
+}
+
+
