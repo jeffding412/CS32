@@ -199,7 +199,9 @@ void City::preachToFlatulansAroundPlayer()
             m_nFlatulans--;
         }
         else
+        {
             k++;
+        }
     }
 }
 

@@ -12,6 +12,7 @@
 #include "global.h"
 #include "Player.h"
 #include "Flatulan.h"
+#include "History.h"
 
 class City
 {
@@ -28,6 +29,7 @@ public:
     int     nFlatulansAt(int r, int c) const;
     bool    determineNewPosition(int& r, int& c, int dir) const;
     void    display() const;
+    History& history();
     
     // Mutators
     bool  addFlatulan(int r, int c);

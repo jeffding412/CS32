@@ -7,6 +7,9 @@
 //
 
 #include "History.h"
+#include "global.h"
+#include <iostream>
+using namespace std;
 
 History::History(int nRows, int nCols)
 {
@@ -30,4 +33,23 @@ bool History::record(int r, int c)
     return true;
 }
 
-
+void History::display() const
+{
+    clearScreen();
+    
+    for (int row = 0; row < m_rows; row++) {
+        for (int col = 0; col < m_cols; col++) {
+            if (historyGrid[row][col] == 0) {
+                cout << '.';
+            }
+            else if (historyGrid[row][col] > 25) {
+                cout << 'Z';
+            }
+            else {
+                cout << char(historyGrid[row][col] + 64);
+            }
+        }
+        cout << endl;
+    }
+    cout << endl;
+}
