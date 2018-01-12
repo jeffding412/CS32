@@ -43,6 +43,7 @@ private:
     Player*   m_player;
     Flatulan* m_flatulans[MAXFLATULANS];
     int       m_nFlatulans;
+    History m_history;
     
     // Helper functions
     bool isInBounds(int r, int c) const;

@@ -17,7 +17,7 @@ using namespace std;
 ///////////////////////////////////////////////////////////////////////////
 
 City::City(int nRows, int nCols)
-: m_rows(nRows), m_cols(nCols), m_player(nullptr), m_nFlatulans(0)
+: m_rows(nRows), m_cols(nCols), m_player(nullptr), m_nFlatulans(0), m_history(nRows, nCols)
 {
     if (nRows <= 0  ||  nCols <= 0  ||  nRows > MAXROWS  ||  nCols > MAXCOLS)
     {
@@ -47,6 +47,12 @@ int City::cols() const
 Player* City::player() const
 {
     return m_player;
+}
+
+History& City::history()
+{
+    History& history = m_history;
+    return history;
 }
 
 int City::flatulanCount() const
@@ -200,6 +206,7 @@ void City::preachToFlatulansAroundPlayer()
         }
         else
         {
+            history().record(fp->row(), fp->col());
             k++;
         }
     }
