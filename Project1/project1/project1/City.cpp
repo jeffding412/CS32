@@ -197,18 +197,20 @@ void City::preachToFlatulansAroundPlayer()
         
         // if orthogonally or diagonally adjacent and conversion succeeds
         if (rowdiff >= -1  &&  rowdiff <= 1  &&
-            coldiff >= -1  &&  coldiff <= 1  &&
-            fp->possiblyGetConverted() )
+            coldiff >= -1  &&  coldiff <= 1)
         {
-            delete m_flatulans[k];
-            m_flatulans[k] = m_flatulans[m_nFlatulans-1];
-            m_nFlatulans--;
+            if (fp->possiblyGetConverted()) {
+                delete m_flatulans[k];
+                m_flatulans[k] = m_flatulans[m_nFlatulans-1];
+                m_nFlatulans--;
+            }
+            else {
+                history().record(fp->row(), fp->col());
+                k++;
+            }
         }
         else
-        {
-            history().record(fp->row(), fp->col());
             k++;
-        }
     }
 }
 

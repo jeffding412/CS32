@@ -1,11 +1,6 @@
 // gas.cpp
 
-#include "global.h"
-#include "Flatulan.h"
-#include "Player.h"
-#include "City.h"
 #include "Game.h"
-#include "History.h"
 
 ///////////////////////////////////////////////////////////////////////////
 //  main()
