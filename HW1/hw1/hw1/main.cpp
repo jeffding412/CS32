@@ -16,5 +16,9 @@ int main()
     string name = "George";
     double GPA = 3.99;
     newMap.insert(name, GPA);
-    cout << newMap.contains("George") << endl;
+    newMap.update(name, 2.22);
+    double value = 2.00;
+    newMap.get(name, value);
+    cout << GPA << endl;
+    cout << value << endl;
 }
