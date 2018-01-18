@@ -11,8 +11,9 @@
 
 #include <string>
 
-typedef std::string KeyType;
-typedef double ValueType;
+typedef std::string KeyType;        //alias for KeyType. To change, modify the type
+typedef double ValueType;           //alias for ValueType. To change, modify the type
+const int DEFAULT_MAX_ITEMS = 250;  //a map can only hold 250 keys
 
 class Map
 {
@@ -69,6 +70,15 @@ public:
     
     void swap(Map& other);
     // Exchange the contents of this map with the other one.
+private:
+    struct mapKey
+    {
+        KeyType myKey;
+        ValueType myValue;
+    };
+    
+    mapKey myMap[DEFAULT_MAX_ITEMS];
+    int mapSize;
 };
 
 #endif /* Map_h */

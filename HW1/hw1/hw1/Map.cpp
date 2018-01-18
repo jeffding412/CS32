@@ -7,3 +7,21 @@
 //
 
 #include "Map.h"
+
+Map::Map()
+{
+    mapSize = 0;
+}
+
+bool Map::empty() const
+{
+    if (mapSize <= 0)
+        return true;
+    else
+        return false;
+}
+
+int Map::size() const
+{
+    return mapSize;
+}
