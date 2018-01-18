@@ -11,6 +11,9 @@
 
 #include <string>
 
+typedef std::string KeyType;
+typedef double ValueType;
+
 class Map
 {
 public:
