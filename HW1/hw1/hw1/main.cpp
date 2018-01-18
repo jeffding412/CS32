@@ -12,5 +12,9 @@ using namespace std;
 
 int main()
 {
-    cout << "Hello World" << endl;
+    Map newMap;
+    string name = "George";
+    double GPA = 3.99;
+    newMap.insert(name, GPA);
+    cout << newMap.contains("George") << endl;
 }
