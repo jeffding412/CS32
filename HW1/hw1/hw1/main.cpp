@@ -7,18 +7,21 @@
 //
 
 #include <iostream>
+#include <cassert>
 #include "Map.h"
 using namespace std;
 
 int main()
 {
-    Map newMap;
-    string name = "George";
-    double GPA = 3.99;
-    newMap.insert(name, GPA);
-    newMap.update(name, 2.22);
-    double value = 2.00;
-    newMap.get(name, value);
-    cout << GPA << endl;
-    cout << value << endl;
+    string name = "None";
+    double value = 0;
+    Map m1;
+    m1.insert("Fred", 2.956);
+    Map m2;
+    m2.insert("Ethel", 3.538);
+    m2.insert("Lucy", 2.956);
+    m1.swap(m2);
+    
+    m2.get(1, name, value);
+    cout << name << " " << value << endl;
 }
