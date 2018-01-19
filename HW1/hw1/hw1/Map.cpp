@@ -36,7 +36,7 @@ int Map::size() const
 // capacity and is full).
 bool Map::insert(const KeyType& key, const ValueType& value)
 {
-    if (this->contains(key) && mapSize >= DEFAULT_MAX_ITEMS)    //return false if key is already in the array or if the array is already full
+    if (this->contains(key) || mapSize >= DEFAULT_MAX_ITEMS)    //return false if key is already in the array or if the array is already full
         return false;
     
     myMap[mapSize].myKey = key;         //set current key to key

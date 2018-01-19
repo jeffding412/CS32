@@ -6,13 +6,14 @@
 //  Copyright © 2018 Jeffrey Ding. All rights reserved.
 //
 
+#include "CarMap.h"
 #include <iostream>
 #include <cassert>
-#include "Map.h"
 using namespace std;
 
 int main()
 {
-    Map m;  // maps ints to strings
-    
+    CarMap m;
+    cout << m.addCar("dasjdksa") << endl;
+    m.print();
 }
