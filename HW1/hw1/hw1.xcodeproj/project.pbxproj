@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		A925EF07200FE708003EF2BA /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A925EF06200FE708003EF2BA /* main.cpp */; };
 		A925EF0F2010172F003EF2BA /* Map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A925EF0D2010172F003EF2BA /* Map.cpp */; };
+		A9BAED6320130FA40054A87A /* newMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9BAED6120130FA40054A87A /* newMap.cpp */; };
 		A9BF79C22011DB7B00A0157D /* CarMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A9BF79C02011DB7B00A0157D /* CarMap.cpp */; };
 /* End PBXBuildFile section */
 
@@ -29,6 +30,8 @@
 		A925EF06200FE708003EF2BA /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		A925EF0D2010172F003EF2BA /* Map.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Map.cpp; sourceTree = "<group>"; };
 		A925EF0E2010172F003EF2BA /* Map.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Map.h; sourceTree = "<group>"; };
+		A9BAED6120130FA40054A87A /* newMap.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = newMap.cpp; sourceTree = "<group>"; };
+		A9BAED6220130FA40054A87A /* newMap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = newMap.h; sourceTree = "<group>"; };
 		A9BF79C02011DB7B00A0157D /* CarMap.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CarMap.cpp; sourceTree = "<group>"; };
 		A9BF79C12011DB7B00A0157D /* CarMap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CarMap.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -68,6 +71,8 @@
 				A925EF0E2010172F003EF2BA /* Map.h */,
 				A9BF79C02011DB7B00A0157D /* CarMap.cpp */,
 				A9BF79C12011DB7B00A0157D /* CarMap.h */,
+				A9BAED6120130FA40054A87A /* newMap.cpp */,
+				A9BAED6220130FA40054A87A /* newMap.h */,
 			);
 			path = hw1;
 			sourceTree = "<group>";
@@ -132,6 +137,7 @@
 				A925EF0F2010172F003EF2BA /* Map.cpp in Sources */,
 				A925EF07200FE708003EF2BA /* main.cpp in Sources */,
 				A9BF79C22011DB7B00A0157D /* CarMap.cpp in Sources */,
+				A9BAED6320130FA40054A87A /* newMap.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
