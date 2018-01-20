@@ -20,6 +20,14 @@ class Map
 public:
     Map();         // Create an empty map (i.e., one with no key/value pairs)
     
+    Map(int size);  // Create an empty map with a max size
+    
+    ~Map();         // Map Destructor
+    
+    Map(const Map &anotherMap); // Copy Constructor
+    
+    Map& operator = (const Map &anotherMap);    // Assignment Operator
+    
     bool empty() const;  // Return true if the map is empty, otherwise false.
     
     int size() const;    // Return the number of key/value pairs in the map.
@@ -77,7 +85,8 @@ private:
         ValueType myValue;
     };
     
-    mapKey myMap[DEFAULT_MAX_ITEMS];
+    mapKey *myMap;  //declare a pointer to type mapKey
+    int maxMapSize;
     int mapSize;
 };
 
