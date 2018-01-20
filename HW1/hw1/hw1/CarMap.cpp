@@ -13,7 +13,7 @@ using namespace std;
 // Create an empty car map.
 CarMap::CarMap()
 {
-    Map myCarMap;
+    
 }
 
 // If a car with the given license plate is not currently in the map,
