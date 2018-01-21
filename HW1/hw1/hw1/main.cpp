@@ -6,7 +6,7 @@
 //  Copyright © 2018 Jeffrey Ding. All rights reserved.
 //
 
-#include "newMap.h"
+#include "Map.h"
 #include <iostream>
 #include <cassert>
 using namespace std;
