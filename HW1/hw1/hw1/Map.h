@@ -11,8 +11,8 @@
 
 #include <string>
 
-typedef std::string KeyType;        //alias for KeyType. To change, modify the type
-typedef double ValueType;           //alias for ValueType. To change, modify the type
+typedef int KeyType;        //alias for KeyType. To change, modify the type
+typedef std::string ValueType;           //alias for ValueType. To change, modify the type
 const int DEFAULT_MAX_ITEMS = 250;  //a map can only hold 250 keys
 
 class Map
