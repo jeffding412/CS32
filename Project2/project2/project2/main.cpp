@@ -13,8 +13,12 @@ using namespace std;
 int main()
 {
     Map myMap;
-    myMap.insert("Jeffrey", 3.80);
-    myMap.insert("Sahil", 3.79);
+    myMap.insertOrUpdate("Jeffrey", 3.80);
+    myMap.insertOrUpdate("Niall", 3.79);
+    myMap.insertOrUpdate("Sahil", 3.79);
+    myMap.insertOrUpdate("Jeff", 3.79);
+    myMap.insertOrUpdate("Samuel", 3.79);
+    cout << myMap.erase("Sahil") << endl;
     cout << myMap.size() << endl;
     cout << myMap.contains("Jeffrey") << endl;
     cout << myMap.contains("Sahil") << endl;

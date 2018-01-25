@@ -45,21 +45,21 @@ int Map::size() const
 //returns true if inserts key into Linked List, false otherwise
 bool Map::insert(const KeyType& key, const ValueType& value)
 {
-    if (this->contains(key)) {
+    if (this->contains(key)) {      //if the Linked List contains the key, return false
         return false;
     }
     else {
-        Node *n = new Node;
-        n->myKey = key;
+        Node *n = new Node;         //create a new node
+        n->myKey = key;             //set the new node key and value
         n->myValue = value;
-        n->next = nullptr;
+        n->next = nullptr;          //put the node at the end of the Linked List
         n->prev = tail;
         
-        if (this->empty()) {
+        if (this->empty()) {        //if the Linked List was empty, make the head and tail point to the only node
             head = n;
             tail = n;
         }
-        else {
+        else {                      //if adding node to the end, make the previous node point to the new node and make tail point to the new node
             tail->next = n;
             tail = n;
         }
@@ -70,9 +70,87 @@ bool Map::insert(const KeyType& key, const ValueType& value)
     }
 }
 
+//returns true if updates key in Linked List, false otherwise
+bool Map::update(const KeyType& key, const ValueType& value)
+{
+    Node *p = head;             //make a node pointer that traverses the Linked List
+    while (p != nullptr) {
+        if (p->myKey == key) {  //if the current node's key is the target key, set it's value to the passed in value
+            p->myValue = value;
+            return true;
+        }
+        p = p->next;            //move on to the next node
+    }
+    return false;
+}
+
+//(always) return true if inserts key into or updates key in Linked List
+bool Map::insertOrUpdate(const KeyType& key, const ValueType& value)
+{
+    if (this->update(key, value)) {
+        return true;
+    }
+    return (this->insert(key, value));
+}
+
+//returns true if key is erased from Linked List, false otherwise
+bool Map::erase(const KeyType& key)
+{
+    if (this->empty()) {
+        return false;
+    }
+    
+    if (head->myKey == key && this->size() == 1) {  //if the Linked List has only one node and it's to be erased, delete the node and set the head and tail to nullptr
+        delete head;
+        head = nullptr;
+        tail = nullptr;
+        mapSize--;
+        return true;
+    }
+    
+    if (head->myKey == key) {               //if the erased node is the head node
+        Node *killMe = head;                //create a Node pointer to the head node
+        head->next->prev = killMe->prev;    //set the next node's prev pointer to nullptr
+        head = killMe->next;                //set head to the next node
+        delete killMe;                      //delete the current node
+        mapSize--;
+        return true;
+    }
+    
+    if (tail->myKey == key) {               //if the erased node is the tail node
+        Node *killMe = tail;                //create a Node pointer to the tail node
+        tail->prev->next = killMe->next;    //set the prev node's next pointer to nullptr
+        tail = killMe->prev;                //set the tail to the prev node
+        delete killMe;                      //delete the current node
+        mapSize--;
+        return true;
+    }
+    
+    //traverse the Linked List and point to the node above the to be deleted node
+    Node *p = head;
+    while (p != nullptr) {
+        if (p->next != nullptr && p->next->myKey == key) {
+            break;
+        }
+        p = p->next;
+    }
+
+    if (p != nullptr) {                     //if pointing to a valid node
+        Node *killMe = p->next;             //create a Node pointer to the targeted node
+        p->next = killMe->next;             //set the previous node's next pointer to targeted node's next node
+        killMe->next->prev = killMe->prev;  //set the next node's prev pointer to the targeted node's prev node
+        delete killMe;                      //delete the targeted node
+        mapSize--;
+        return true;
+    }
+    
+    return false;
+}
+
 //return true if key is in Linked List, false otherwise
 bool Map::contains(const KeyType& key) const
 {
+    //traverse the Linked List and return true if the key is in the Linked List
     Node *p = head;
     while (p != nullptr) {
         if (p->myKey == key) {

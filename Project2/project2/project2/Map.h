@@ -59,7 +59,7 @@ public:
     void swap(Map& other);
     //swaps a Linked List with another Linked List
 private:
-    struct Node {
+    struct Node {           
         KeyType myKey;
         ValueType myValue;
         Node *prev;
