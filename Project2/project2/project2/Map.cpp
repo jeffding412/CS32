@@ -45,14 +45,41 @@ int Map::size() const
 //returns true if inserts key into Linked List, false otherwise
 bool Map::insert(const KeyType& key, const ValueType& value)
 {
-    if (head == nullptr) {
-        Node *p = new Node;
-        p->myKey = key;
-        p->myValue = value;
-        p->next = head;
-        p->prev = nullptr;
-        head = p;
-        mapSize++;
+    if (this->contains(key)) {
+        return false;
     }
-    return true;
+    else {
+        Node *n = new Node;
+        n->myKey = key;
+        n->myValue = value;
+        n->next = nullptr;
+        n->prev = tail;
+        
+        if (this->empty()) {
+            head = n;
+            tail = n;
+        }
+        else {
+            tail->next = n;
+            tail = n;
+        }
+        
+
+        mapSize++;
+        return true;
+    }
 }
+
+//return true if key is in Linked List, false otherwise
+bool Map::contains(const KeyType& key) const
+{
+    Node *p = head;
+    while (p != nullptr) {
+        if (p->myKey == key) {
+            return true;
+        }
+        p = p->next;
+    }
+    return false;
+}
+

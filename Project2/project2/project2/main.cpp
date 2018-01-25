@@ -14,6 +14,9 @@ int main()
 {
     Map myMap;
     myMap.insert("Jeffrey", 3.80);
+    myMap.insert("Sahil", 3.79);
     cout << myMap.size() << endl;
+    cout << myMap.contains("Jeffrey") << endl;
+    cout << myMap.contains("Sahil") << endl;
     cout << myMap.empty() << endl;
 }
