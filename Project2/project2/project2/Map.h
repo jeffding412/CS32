@@ -70,4 +70,10 @@ private:
     int mapSize;
 };
 
+bool combine(const Map& m1, const Map& m2, Map& result);
+//combines the nodes in m1 and m2 together and put them into result. Return true unless m1 and m2 have a same node that are different values. If so, delete that node and return false
+
+void subtract(const Map& m1, const Map& m2, Map& result);
+//store all nodes in m1 that are not also in m2 into result
+
 #endif /* Map_h */

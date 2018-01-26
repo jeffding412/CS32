@@ -13,26 +13,23 @@ using namespace std;
 int main()
 {
     Map myMap;
-    KeyType Name = "John";
-    ValueType GPA = 1.00;
-    myMap.insertOrUpdate("Jeffrey", 3.80);
-    myMap.insertOrUpdate("Niall", 4.00);
-    myMap.insertOrUpdate("Sahil", 3.79);
-    myMap.insertOrUpdate("Jeff", 3.67);
-    myMap.insertOrUpdate("Samuel", 3.21);
-    
+    KeyType Name;
+    ValueType GPA;
+    myMap.insertOrUpdate("Fred", 1.23);
+    myMap.insertOrUpdate("Ethel", 4.56);
+    myMap.insertOrUpdate("Lucy", 7.89);
+ 
     Map anotherMap;
-    anotherMap.insertOrUpdate("Niall", 4.00);
-    anotherMap.insertOrUpdate("Sahil", 3.79);
-    anotherMap.insertOrUpdate("Jeff", 3.67);
-    anotherMap.insertOrUpdate("Samuel", 3.21);
+    anotherMap.insertOrUpdate("Lucy", 4.56);
+    anotherMap.insertOrUpdate("Rick", 3.21);
     
-    myMap.swap(anotherMap);
+    Map resultMap;
+    resultMap.insertOrUpdate("David", 4.00);
     
-    cout << myMap.get(0, Name, GPA) << " " << Name << " " << GPA << endl;
-    cout << myMap.get(1, Name, GPA) << " " << Name << " " << GPA << endl;
-    cout << myMap.get(2, Name, GPA) << " " << Name << " " << GPA << endl;
-    cout << myMap.get(3, Name, GPA) << " " << Name << " " << GPA << endl;
-    cout << myMap.get(4, Name, GPA) << " " << Name << " " << GPA << endl;
-    cout << anotherMap.size() << endl;
+    cout << combine(myMap, anotherMap, resultMap) << endl;
+    
+    for (int x = 0; x <= resultMap.size(); x++) {
+        cout << resultMap.get(x, Name, GPA) << " " << Name << " " << GPA << endl;
+    }
+    cout << resultMap.size() << endl;
 }

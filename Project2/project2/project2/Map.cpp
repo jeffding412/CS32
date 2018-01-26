@@ -7,6 +7,8 @@
 //
 
 #include "Map.h"
+#include <iostream>
+using namespace std;
 
 //creates an empty Linked List
 Map::Map()
@@ -48,26 +50,8 @@ Map::~Map()
 Map& Map::operator= (const Map &anotherMap)
 {
     if (this != &anotherMap) {  //make no changes if current Linked List is anotherMap
-        //traverse the Linked List and delete all nodes
-        Node *p = head;
-        while (p != nullptr) {
-            Node *n = p->next;
-            delete p;
-            p = n;
-        }
-        //reset the Linked List
-        mapSize = 0;
-        head = nullptr;
-        tail = nullptr;
-        
-        KeyType anotherKey;
-        ValueType anotherValue;
-        
-        //add the nodes of anotherMap into current Linked List
-        for (int x = 0; x < anotherMap.size(); x++) {
-            anotherMap.get(x, anotherKey, anotherValue);
-            this->insert(anotherKey, anotherValue);
-        }
+        Map temp = anotherMap;  //copy anotherMap into a temporary Map
+        this->swap(temp);       //swap contents of current Linked List and temporary Map
     }
     return *this;
 }
@@ -241,7 +225,47 @@ bool Map::get(int i, KeyType& key, ValueType& value) const
 //swaps a Linked List with another Linked List
 void Map::swap(Map& other)
 {
-    Map temp = other;   //Create a temporary Map and copies Map other into it
-    other = *this;      //Assigns current Linked List into other
-    *this = temp;       //Assigns temporary Map into current Linked List
+    //create a temporary head and tail pointer and a temporary List size
+    Node *tempHead = this->head;
+    Node *tempTail = this->tail;
+    int tempSize = this->size();
+    
+    //point current List pointers to Map other pointers and set current List size to other size
+    this->head = other.head;
+    this->tail = other.tail;
+    this->mapSize = other.size();
+    
+    //point other List pointers to current List pointers and set other List size to current size
+    other.head = tempHead;
+    other.tail = tempTail;
+    other.mapSize = tempSize;
+}
+
+//combines the nodes in m1 and m2 together and put them into result. Return true unless m1 and m2 have a same node that are different values. If so, delete that node and return false
+bool combine(const Map& m1, const Map& m2, Map& result)
+{
+    Map temp1 = m1;             //copy m1 nodes into temp1 to avoid aliasing
+    Map temp2 = m2;             //copy m2 nodes into temp2 to avoid aliasing
+    temp1.swap(result);         //puts m1 nodes into result
+    bool noCorrection = true;   //tracks if we have to correct a faulty node
+    
+    KeyType key;                //holds key
+    ValueType value1;           //holds m1 value at key
+    ValueType value2;           //holds m2 value at key
+    
+    //traverse the m2 Linked List
+    for (int x = 0; x < temp2.size(); x++) {
+        temp2.get(x, key, value2);          //store xth node key and value of m2
+        result.get(key, value1);            //store key value of m1
+        if (!result.contains(key)) {        //if m2 key isn't in m1, add it into result
+            result.insert(key, value2);
+        }
+        else if (value1 != value2)          //if it does contain, but the values mapped are not the same, erase the node and mark we have a faulty node
+        {
+            result.erase(key);
+            noCorrection = false;
+        }
+    }
+    
+    return noCorrection;        //return whether or not we had a faulty node
 }
