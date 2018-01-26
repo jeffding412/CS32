@@ -21,12 +21,18 @@ int main()
     myMap.insertOrUpdate("Jeff", 3.67);
     myMap.insertOrUpdate("Samuel", 3.21);
     
-    Map anotherMap = myMap;
+    Map anotherMap;
+    anotherMap.insertOrUpdate("Niall", 4.00);
+    anotherMap.insertOrUpdate("Sahil", 3.79);
+    anotherMap.insertOrUpdate("Jeff", 3.67);
+    anotherMap.insertOrUpdate("Samuel", 3.21);
     
-    cout << anotherMap.get(0, Name, GPA) << " " << Name << " " << GPA << endl;
-    cout << anotherMap.get(1, Name, GPA) << " " << Name << " " << GPA << endl;
-    cout << anotherMap.get(2, Name, GPA) << " " << Name << " " << GPA << endl;
-    cout << anotherMap.get(3, Name, GPA) << " " << Name << " " << GPA << endl;
-    cout << anotherMap.get(4, Name, GPA) << " " << Name << " " << GPA << endl;
+    myMap.swap(anotherMap);
+    
+    cout << myMap.get(0, Name, GPA) << " " << Name << " " << GPA << endl;
+    cout << myMap.get(1, Name, GPA) << " " << Name << " " << GPA << endl;
+    cout << myMap.get(2, Name, GPA) << " " << Name << " " << GPA << endl;
+    cout << myMap.get(3, Name, GPA) << " " << Name << " " << GPA << endl;
+    cout << myMap.get(4, Name, GPA) << " " << Name << " " << GPA << endl;
     cout << anotherMap.size() << endl;
 }

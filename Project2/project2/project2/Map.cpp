@@ -26,6 +26,7 @@ Map::Map(const Map &anotherMap)
     KeyType anotherKey;
     ValueType anotherValue;
     
+    //add the nodes of anotherMap into current Linked List
     for (int x = 0; x < anotherMap.size(); x++) {
         anotherMap.get(x, anotherKey, anotherValue);
         this->insert(anotherKey, anotherValue);
@@ -41,6 +42,34 @@ Map::~Map()
         delete p;           //delete current Node
         p = n;              //Node pointer p now points to the next Node
     }
+}
+
+//copies a Linked List into another Linked List
+Map& Map::operator= (const Map &anotherMap)
+{
+    if (this != &anotherMap) {  //make no changes if current Linked List is anotherMap
+        //traverse the Linked List and delete all nodes
+        Node *p = head;
+        while (p != nullptr) {
+            Node *n = p->next;
+            delete p;
+            p = n;
+        }
+        //reset the Linked List
+        mapSize = 0;
+        head = nullptr;
+        tail = nullptr;
+        
+        KeyType anotherKey;
+        ValueType anotherValue;
+        
+        //add the nodes of anotherMap into current Linked List
+        for (int x = 0; x < anotherMap.size(); x++) {
+            anotherMap.get(x, anotherKey, anotherValue);
+            this->insert(anotherKey, anotherValue);
+        }
+    }
+    return *this;
 }
 
 //returns true if Linked List is empty, false otherwise
@@ -207,4 +236,12 @@ bool Map::get(int i, KeyType& key, ValueType& value) const
     key = p->myKey;
     value = p->myValue;
     return true;
+}
+
+//swaps a Linked List with another Linked List
+void Map::swap(Map& other)
+{
+    Map temp = other;   //Create a temporary Map and copies Map other into it
+    other = *this;      //Assigns current Linked List into other
+    *this = temp;       //Assigns temporary Map into current Linked List
 }

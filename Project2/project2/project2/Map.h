@@ -26,7 +26,7 @@ public:
     ~Map();
     //destruct a Linked List
     
-    Map &operator= (const Map &anotherMap);
+    Map& operator= (const Map &anotherMap);
     //copies a Linked List into another Linked List
     
     bool empty() const;
