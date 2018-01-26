@@ -269,3 +269,22 @@ bool combine(const Map& m1, const Map& m2, Map& result)
     
     return noCorrection;        //return whether or not we had a faulty node
 }
+
+//store all nodes in m1 that are not also in m2 into result
+void subtract(const Map& m1, const Map& m2, Map& result)
+{
+    Map temp1 = m1;     //copy m1 nodes into temp1 to avoid aliasing
+    Map temp2 = m2;     //copy m2 nodes into temp2 to avoid aliasing
+    temp1.swap(result); //puts m1 nodes into result
+    
+    KeyType key;        //holds key
+    ValueType value;    //pointless variable to hold value
+    
+    //traverse the m2 Linked List
+    for (int x = 0; x < temp2.size(); x++) {
+        temp2.get(x, key, value);       //store xth node key and value of m2
+        if (result.contains(key)) {     //if m2 key is in m1, erase the node from result
+            result.erase(key);
+        }
+    }
+}
