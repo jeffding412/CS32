@@ -13,14 +13,20 @@ using namespace std;
 int main()
 {
     Map myMap;
+    KeyType Name = "John";
+    ValueType GPA = 1.00;
     myMap.insertOrUpdate("Jeffrey", 3.80);
-    myMap.insertOrUpdate("Niall", 3.79);
+    myMap.insertOrUpdate("Niall", 4.00);
     myMap.insertOrUpdate("Sahil", 3.79);
-    myMap.insertOrUpdate("Jeff", 3.79);
-    myMap.insertOrUpdate("Samuel", 3.79);
-    cout << myMap.erase("Sahil") << endl;
-    cout << myMap.size() << endl;
-    cout << myMap.contains("Jeffrey") << endl;
-    cout << myMap.contains("Sahil") << endl;
-    cout << myMap.empty() << endl;
+    myMap.insertOrUpdate("Jeff", 3.67);
+    myMap.insertOrUpdate("Samuel", 3.21);
+    
+    Map anotherMap = myMap;
+    
+    cout << anotherMap.get(0, Name, GPA) << " " << Name << " " << GPA << endl;
+    cout << anotherMap.get(1, Name, GPA) << " " << Name << " " << GPA << endl;
+    cout << anotherMap.get(2, Name, GPA) << " " << Name << " " << GPA << endl;
+    cout << anotherMap.get(3, Name, GPA) << " " << Name << " " << GPA << endl;
+    cout << anotherMap.get(4, Name, GPA) << " " << Name << " " << GPA << endl;
+    cout << anotherMap.size() << endl;
 }

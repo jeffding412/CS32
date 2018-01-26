@@ -16,6 +16,22 @@ Map::Map()
     mapSize = 0;
 }
 
+//creates a replica of another Linked List
+Map::Map(const Map &anotherMap)
+{
+    mapSize = 0;
+    head = nullptr;
+    tail = nullptr;
+
+    KeyType anotherKey;
+    ValueType anotherValue;
+    
+    for (int x = 0; x < anotherMap.size(); x++) {
+        anotherMap.get(x, anotherKey, anotherValue);
+        this->insert(anotherKey, anotherValue);
+    }
+}
+
 //destruct a Linked List
 Map::~Map()
 {
@@ -161,3 +177,34 @@ bool Map::contains(const KeyType& key) const
     return false;
 }
 
+//return true if key's value in LinkedList is stored into value, false otherwise
+bool Map::get(const KeyType& key, ValueType& value) const
+{
+    //traverse the Linked List and if the current node's key is the target key, put key's value into the passed value
+    Node *p = head;
+    while (p != nullptr) {
+        if (p->myKey == key) {
+            value = p->myValue;
+            return true;
+        }
+        p = p->next;
+    }
+    return false;
+}
+
+//return true if key and the key's value at index i is stored into key and value, false otherwise
+bool Map::get(int i, KeyType& key, ValueType& value) const
+{
+    if (i < 0 || i >= size()) { //return true if i is negative or i is not accessible
+        return false;
+    }
+    
+    Node *p = head;
+    for (int x = 0; x < i; x++) {   //goes to the ith node
+        p = p->next;
+    }
+    //stores the current node's key and value into passed parameters
+    key = p->myKey;
+    value = p->myValue;
+    return true;
+}
