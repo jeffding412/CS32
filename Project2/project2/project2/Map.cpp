@@ -7,8 +7,6 @@
 //
 
 #include "Map.h"
-#include <iostream>
-using namespace std;
 
 //creates an empty Linked List
 Map::Map()
