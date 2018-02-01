@@ -214,10 +214,14 @@ bool Map::get(int i, KeyType& key, ValueType& value) const
     for (int x = 0; x < i; x++) {   //goes to the ith node
         p = p->next;
     }
+    
     //stores the current node's key and value into passed parameters
-    key = p->myKey;
-    value = p->myValue;
-    return true;
+    if (p != nullptr) {
+        key = p->myKey;
+        value = p->myValue;
+        return true;
+    }
+    return false;
 }
 
 //swaps a Linked List with another Linked List

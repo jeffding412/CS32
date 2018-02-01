@@ -13,11 +13,11 @@ using namespace std;
 int main()
 {
     LinkedList myLL;
-    myLL.addToFront("dog");
-    myLL.addToFront("cat");
-    myLL.addToRear("rat");
-    myLL.addItem("fly");
-    myLL.deleteItem("rat");
+    myLL.addItem("Louis");
+    myLL.addItem("Harry");
+    myLL.addItem("Niall");
+    myLL.addItem("Zayn");
+    myLL.addItem("Liam");
     myLL.printItems();
-    cout << myLL.findItem("rat") << endl;
+    
 }

@@ -13,7 +13,6 @@ using namespace std;
 LinkedList::LinkedList()
 {
     head = nullptr;
-    tail = nullptr;
 }
 
 LinkedList::~LinkedList()
@@ -36,8 +35,6 @@ void LinkedList::addToFront(std::string v)
     p->next = head;
     
     head = p;
-    if(tail == nullptr)
-        tail = p;
 }
 
 void LinkedList::addToRear(std::string v)
@@ -47,11 +44,14 @@ void LinkedList::addToRear(std::string v)
     }
     else
     {
+        Node *p = head;
+        while (p->next != nullptr) {
+            p = p->next;
+        }
         Node *n = new Node;
         n->value = v;
-        tail->next = n;
         n->next = nullptr;
-        tail = n;
+        p->next = n;
     }
 }
 
@@ -76,8 +76,6 @@ void LinkedList::addItem(std::string v)
         latest->value = v;
         latest->next = p->next;
         p->next = latest;
-        if (latest->next == nullptr)
-            tail = latest;
     }
 }
 
@@ -126,4 +124,20 @@ bool LinkedList::findItem(std::string v)
         p = p->next;
     }
     return false;
+}
+
+void LinkedList::reverse()
+{
+    Node *currentNode = head;
+    Node *nextNode = nullptr;
+    Node *prevNode = nullptr;
+    
+    while (currentNode != nullptr) {
+        nextNode = currentNode->next;
+        currentNode->next = prevNode;
+        prevNode = currentNode;
+        currentNode = nextNode;
+    }
+    
+    head = currentNode;
 }

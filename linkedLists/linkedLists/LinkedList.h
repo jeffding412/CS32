@@ -21,6 +21,7 @@ public:
     void deleteItem(std::string v);
     bool findItem(std::string v);
     void printItems();
+    void reverse();
     ~LinkedList();
 private:
     struct Node
@@ -29,7 +30,6 @@ private:
         Node *next;
     };
     Node *head;
-    Node *tail;
 };
 
 #endif /* LinkedList_h */
