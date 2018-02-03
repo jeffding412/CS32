@@ -55,7 +55,6 @@ bool pathExists(string maze[], int nRows, int nCols, int sr, int sc, int er, int
     //While the stack is not empty
     while (!coordQueue.empty()) {
         Coord temp = coordQueue.front();  //Pop the front coordinate off the queue. This gives you the current (r,c) location that your algorithm is exploring.
-        cerr << temp.r() << " " << temp.c() << endl;
         coordQueue.pop();
         
         //If the current (r,c) coordinate is equal to the ending coordinate, then we've solved the maze so return true!

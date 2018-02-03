@@ -197,12 +197,12 @@ int evaluate(string infix, const Map& values, string& postfix, int& result)
         return 1;
     }
     
+    convertToPostfix(infixNoSpace, postfix);
+    
     //if the infix contains letter operands that aren't in Map values, return 2
     if (!containsMapExclusive(infixNoSpace, values)) {
         return 2;
     }
-    
-    convertToPostfix(infixNoSpace, postfix);
     
     stack<char> evaluateStack;  //Initialize the operand stack to empty
     char ch;
@@ -214,11 +214,11 @@ int evaluate(string infix, const Map& values, string& postfix, int& result)
             evaluateStack.push(postfixValue);   //push the value that ch represents onto the operand stack
         }
         else {  //ch is a binary operator
-            int operand2 = evaluateStack.top();
-            evaluateStack.pop();
-            int operand1 = evaluateStack.top();
-            evaluateStack.pop();
-            switch (ch) {
+            int operand2 = evaluateStack.top(); //set operand2 to the top of the operand stack
+            evaluateStack.pop();                //pop the stack
+            int operand1 = evaluateStack.top(); //set operand1 to the top of the operand stack
+            evaluateStack.pop();                //pop the stack
+            switch (ch) {                       //apply the operation that ch represents to operand1 and operand2, and push the result onto the stack
                 case '+':
                     evaluateStack.push(operand1 + operand2);
                     break;
@@ -229,12 +229,16 @@ int evaluate(string infix, const Map& values, string& postfix, int& result)
                     evaluateStack.push(operand1 * operand2);
                     break;
                 case '/':
+                    if (operand2 == 0) {        //check if not dividing by zero
+                        return 3;
+                    }
                     evaluateStack.push(operand1 / operand2);
                     break;
             }
         }
     }
     
+    //When the loop is finished, the operand stack will contain one item, the result of evaluating the expression
     result = evaluateStack.top();
     
     return 0;
@@ -247,10 +251,8 @@ int main()
     Map m;
     for (int k = 0; vars[k] != '#'; k++)
         m.insert(vars[k], vals[k]);
-    
     string pf;
     int answer;
-    
     assert(evaluate("a+ e", m, pf, answer) == 0  &&
            pf == "ae+"  &&  answer == -6);
     answer = 999;
