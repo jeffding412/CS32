@@ -96,12 +96,24 @@ int indexOfMin(const double a[], int n)
 //    10 20 20
 bool includes(const double a1[], int n1, const double a2[], int n2)
 {
-    return false;  // This is not always correct.
+    if (n2 == 0) {      //if a2 becomes empty first, all values are in a1
+        return true;
+    }
+    if (n1 == 0) {      //if a1 becomes empty first, all values of a2 are not in a1
+        return false;
+    }
+    
+    if (a1[0] == a2[0]) {                           //if first elements of both array are equal
+        return includes(a1+1, n1-1, a2+1, n2-1);    //recursively move on to next elements
+    }
+    else {
+        return includes(a1+1, n1-1, a2, n2);        //else move on to next element in first array
+    }
 }
 
 int main()
 {
     double a1[7] = { 10, 50, 40, 20, 50, 40, 30 };
-    double a2[3] = { 50, 20, 30};
-    cout << indexOfMin(a1, 5) << endl;
+    double a2[3] = { 10, 20, 20};
+    cout << includes(a1, 7, a2, 3) << endl;
 }
