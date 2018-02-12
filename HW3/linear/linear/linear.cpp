@@ -47,17 +47,17 @@ int countFalse(const double a[], int n)
 // element, return -1.
 int firstFalse(const double a[], int n)
 {
-    if (n == 0) {
+    if (n == 0) {                           //if array is empty, return -1
         return -1;
     }
-    if (!somePredicate(a[0])) {
+    if (!somePredicate(a[0])) {             //if element is false, return 0
         return 0;
     }
-    int index = 1 + firstFalse(a+1, n-1);
-    if (index == 0) {
+    int index = 1 + firstFalse(a+1, n-1);   //recursively tracks first false
+    if (index == 0) {                       //if index is 0, return -1;
         return -1;
     }
-    return index;
+    return index;                           //return index
 }
 
 // Return the subscript of the smallest double in the array (i.e.,
@@ -67,7 +67,16 @@ int firstFalse(const double a[], int n)
 // examine, return -1.
 int indexOfMin(const double a[], int n)
 {
-    return -999;  // This is incorrect.
+    if (n == 0) {                           //return -1 for no elements
+        return -1;
+    }
+    if (n == 1) {                           //return 0 for one element
+        return 0;
+    }
+    if (a[n-1] < a[indexOfMin(a, n-1)]) {   //if the last index is less than the min Index, return the last index
+        return n-1;
+    }
+    return indexOfMin(a, n-1);              //recursively return the min index
 }
 
 // If all n2 elements of a2 appear in the n1 element array a1, in
@@ -92,6 +101,7 @@ bool includes(const double a1[], int n1, const double a2[], int n2)
 
 int main()
 {
-    double a[3] = { -0.4, -0.2, -4.3 };
-    cout << firstFalse(a, 3) << endl;
+    double a1[7] = { 10, 50, 40, 20, 50, 40, 30 };
+    double a2[3] = { 50, 20, 30};
+    cout << indexOfMin(a1, 5) << endl;
 }
