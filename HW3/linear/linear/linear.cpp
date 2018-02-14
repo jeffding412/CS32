@@ -115,5 +115,8 @@ int main()
 {
     double a1[7] = { 10, 50, 40, 20, 50, 40, 30 };
     double a2[3] = { 10, 20, 20};
+    cout << allTrue(a1, 7) << endl;
+    cout << countFalse(a2, 3) << endl;
+    cout << indexOfMin(a1, 7) << endl;
     cout << includes(a1, 7, a2, 3) << endl;
 }

@@ -115,6 +115,8 @@ void order(double a[], int n)
 
 int main() {
     double a1[7] = {10, 50, 40, 20, 50, 40, 30};
+    double a2[3] = {10, 40, 30};
+    cout << countIncludes(a1, 7, a2, 3) << endl;
     order(a1, 7);
     for (int x = 0; x < 7; x++) {
         cout << a1[x] << endl;
