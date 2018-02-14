@@ -22,7 +22,20 @@ using namespace std;
 //    50 40 30            3
 int countIncludes(const double a1[], int n1, const double a2[], int n2)
 {
-    return -999;  // This is incorrect.
+    if (n2 == 0) {      //if a2 runs out, all of a2 is in a1
+        return 1;
+    }
+    if (n1 == 0) {      //if a1 runs out before a2, a2 is not all in a1
+        return 0;
+    }
+    
+    //if the first elements are the same, recursively check the next elements and the next a1 element
+    if (a1[0] == a2[0]) {
+        return countIncludes(a1+1, n1-1, a2+1, n2-1) + countIncludes(a1+1, n1-1, a2, n2);
+    }
+    else {
+        return countIncludes(a1+1, n1-1, a2, n2);   //else check the next a1 element recursively
+    }
 }
 
 // Exchange two doubles
@@ -90,9 +103,21 @@ void split(double a[], int n, double splitter,
 // If n <= 1, do nothing.
 void order(double a[], int n)
 {
-    return;  // This is not always correct.
+    if (n <= 1)     //base case, if n <= 1, do nothing
+        return;
+    
+    int firstNotGreater;                                //holds index of first element not greater
+    int firstLess;                                      //holds index of first element less
+    split(a, n, a[n/2], firstNotGreater, firstLess);    //split array with the middle element
+    order(a, firstNotGreater);                          //recursively order the first half of the array that are greater than the middle element
+    order(a+firstLess, n-firstLess);                    //recursively order the second half of the array that are less than the middle element
 }
 
 int main() {
-    cout << "Hello World" << endl;
+    double a1[7] = {10, 50, 40, 20, 50, 40, 30};
+    order(a1, 7);
+    for (int x = 0; x < 7; x++) {
+        cout << a1[x] << endl;
+    }
+    
 }
