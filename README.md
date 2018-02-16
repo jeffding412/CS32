@@ -3,15 +3,15 @@ These are my solutions to all UCLA CS32 HW/Projects from Winter of 2017 with Pro
 
 | Project | Score |
 | ------- | ----- |
-| 1 | 95/100  |
-| 2 |   |
+| 1 | 95/100 |
+| 2 | 100/100 |
 | 3 |   |
 | 4 |   |
 
 | HW | Score |
 | ---- | ---- |
-| 1 | 94/100  |
-| 2 |   |
+| 1 | 94/100 |
+| 2 | 100/100 |
 | 3 |   |
 | 4 |   |
 | 5 |   |
