@@ -34,7 +34,7 @@ void removeBad(list<Movie*>& li)
     it = li.begin();
     while (it != li.end()) {
         if ((*it)->rating() < 50) {
-            destroyedOnes.push_back((*it)->rating());
+            delete (*it);
             it = li.erase(it);
         }
         else {

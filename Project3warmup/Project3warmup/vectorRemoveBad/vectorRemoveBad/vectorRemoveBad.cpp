@@ -33,7 +33,7 @@ void removeBad(vector<Movie*>& v)
     it = v.begin();
     while (it != v.end()) {
         if ((*it)->rating() < 50) {
-            destroyedOnes.push_back((*it)->rating());
+            delete (*it);
             it = v.erase(it);
         }
         else {
