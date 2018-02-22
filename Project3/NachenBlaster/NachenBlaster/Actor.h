@@ -7,6 +7,9 @@
 
 class StudentWorld;
 
+///////////////////////////////////////////////////
+///////////////////// Actor ///////////////////////
+///////////////////////////////////////////////////
 class Actor : public GraphObject
 {
 public:
@@ -21,6 +24,9 @@ private:
     StudentWorld* m_world;
 };
 
+///////////////////////////////////////////////////
+////////////////////// Star ///////////////////////
+///////////////////////////////////////////////////
 class Star : public Actor
 {
 public:
@@ -28,6 +34,38 @@ public:
     virtual void doSomething();
     virtual void move();
 private:
+};
+
+///////////////////////////////////////////////////
+////////////////////// Ship ///////////////////////
+///////////////////////////////////////////////////
+class Ship : public Actor
+{
+public:
+    Ship(int imageID, double startX, double startY, int dir, double size, int depth, StudentWorld* world, int startHealth);
+    virtual void doSomething() = 0;
+    virtual void move() = 0;
+    int getHealth();
+private:
+    int m_Health;
+};
+
+///////////////////////////////////////////////////
+///////////// NachenBlaster ///////////////////////
+///////////////////////////////////////////////////
+class NachenBlaster : public Ship
+{
+public:
+    NachenBlaster(StudentWorld* world);
+    virtual void doSomething();
+    virtual void move();
+    int getTorpedoes();
+    void addTorpedoes();
+    int getCabbage();
+private:
+    int m_CabbagePoints;
+    int m_torpedoes;
+    int m_keyValue;
 };
 
 #endif // ACTOR_H_

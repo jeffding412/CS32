@@ -15,12 +15,21 @@ class StudentWorld : public GameWorld
 {
 public:
     StudentWorld(std::string assetDir);
+    virtual ~StudentWorld();
     virtual int init();
     virtual int move();
     virtual void cleanUp();
+    void addStar();
     void removeDeadObjects();
+    void killAlien();
+    int maxAliensOnScreen();
+    int getRemainingAliensToKill();
+    void updateStatusLine();
 private:
     vector<Actor*> m_actors;
+    int remainingAliensToKill;
+    int number_aliens;
+    NachenBlaster* m_player;
 };
 
 #endif // STUDENTWORLD_H_
