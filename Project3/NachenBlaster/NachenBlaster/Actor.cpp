@@ -9,6 +9,7 @@
 Actor::Actor(int imageID, double startX, double startY, int dir, double size, int depth, StudentWorld* world)
 :GraphObject(imageID, startX, startY, dir, size, depth)
 {
+    m_id = imageID;
     m_world = world;
     m_Status = true;
 }
@@ -26,6 +27,11 @@ bool Actor::isAlive() const
 void Actor::setDead()
 {
     m_Status = false;
+}
+
+int Actor::getImageID() const
+{
+    return m_id;
 }
 
 ///////////////////////////////////////////////////

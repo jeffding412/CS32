@@ -20,6 +20,10 @@ StudentWorld::StudentWorld(string assetDir)
 
 StudentWorld::~StudentWorld()
 {
+    while (getLives() != 0)
+    {
+        decLives();
+    }
     cleanUp();
 }
 
@@ -59,9 +63,6 @@ int StudentWorld::move()
 
 void StudentWorld::removeDeadObjects()
 {
-    if (!m_player->isAlive()) {
-        delete m_player;
-    }
     vector<Actor*>::iterator it;
     it = m_actors.begin();
     while (it != m_actors.end()) {
@@ -109,12 +110,13 @@ void StudentWorld::updateStatusLine()
 
 void StudentWorld::cleanUp()
 {
-    delete m_player;
-    
     vector<Actor*>::iterator it;
     it = m_actors.begin();
     while (it != m_actors.end()) {
         delete (*it);
         it = m_actors.erase(it);
+    }
+    if (getLives() != 0) {
+        delete m_player;
     }
 }

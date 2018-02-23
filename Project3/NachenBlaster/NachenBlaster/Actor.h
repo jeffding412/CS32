@@ -19,9 +19,11 @@ public:
     void setDead();
     virtual void doSomething() = 0;
     virtual void move() = 0;
+    int getImageID() const;
 private:
     bool m_Status;
     StudentWorld* m_world;
+    int m_id;
 };
 
 ///////////////////////////////////////////////////
