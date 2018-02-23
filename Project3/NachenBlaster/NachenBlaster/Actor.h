@@ -70,4 +70,42 @@ private:
     int m_keyValue;
 };
 
+///////////////////////////////////////////////////
+//////////////// Projectile ///////////////////////
+///////////////////////////////////////////////////
+
+class Projectile : public Actor
+{
+public:
+    Projectile(int imageID, double startX, double startY, int dir, StudentWorld* world);
+    virtual void doSomething();
+    virtual void move() = 0;
+    bool isOffScreen();
+private:
+};
+
+///////////////////////////////////////////////////
+/////////////////// Cabbage ///////////////////////
+///////////////////////////////////////////////////
+
+class Cabbage : public Projectile
+{
+public:
+    Cabbage(double startX, double startY, StudentWorld* world);
+    virtual void move();
+private:
+};
+
+///////////////////////////////////////////////////
+/////////////////// Torpedo ///////////////////////
+///////////////////////////////////////////////////
+
+class Torpedo : public Projectile
+{
+public:
+    Torpedo(double startX, double startY, StudentWorld* world);
+    virtual void move();
+private:
+};
+
 #endif // ACTOR_H_

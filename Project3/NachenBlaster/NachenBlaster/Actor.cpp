@@ -84,6 +84,9 @@ void NachenBlaster::doSomething()
         if (getWorld()->getKey(m_keyValue)) {
             move();
         }
+        if (getCabbage() < 30) {
+            m_CabbagePoints++;
+        }
     }
 }
 
@@ -110,6 +113,18 @@ void NachenBlaster::move()
                 moveTo(getX()+6, getY());
             }
             break;
+        case KEY_PRESS_SPACE:
+            if (getCabbage() >= 5) {
+                m_CabbagePoints -= 5;
+                getWorld()->addProjectile(IID_CABBAGE, getX(), getY());
+            }
+            break;
+        case KEY_PRESS_TAB:
+            if (getTorpedoes() != 0) {
+                m_torpedoes--;
+                getWorld()->addProjectile(IID_TORPEDO, getX()+12, getY());
+            }
+            break;
         default:
             break;
     }
@@ -128,4 +143,64 @@ void NachenBlaster::addTorpedoes()
 int NachenBlaster::getCabbage()
 {
     return m_CabbagePoints;
+}
+
+///////////////////////////////////////////////////
+//////////////// Projectile ///////////////////////
+///////////////////////////////////////////////////
+
+Projectile::Projectile(int imageID, double startX, double startY, int dir, StudentWorld* world)
+:Actor(imageID, startX, startY, dir, 0.5, 1, world)
+{}
+
+void Projectile::doSomething()
+{
+    if (isAlive()) {
+        if (isOffScreen()) {
+            setDead();
+        }
+        //todo: collision detection
+        move();
+        //todo: collision detection
+    }
+}
+
+bool Projectile::isOffScreen()
+{
+    if (getX() >= VIEW_WIDTH || getY() < 0) {
+        return true;
+    }
+    return false;
+}
+
+///////////////////////////////////////////////////
+/////////////////// Cabbage ///////////////////////
+///////////////////////////////////////////////////
+
+Cabbage::Cabbage(double startX, double startY, StudentWorld* world)
+:Projectile(IID_CABBAGE, startX, startY, 0, world)
+{}
+
+void Cabbage::move()
+{
+    moveTo(getX()+8, getY());
+    setDirection(getDirection()+20);
+}
+
+///////////////////////////////////////////////////
+/////////////////// Torpedo ///////////////////////
+///////////////////////////////////////////////////
+
+Torpedo::Torpedo(double startX, double startY, StudentWorld* world)
+:Projectile(IID_TORPEDO, startX, startY, 0, world)
+{}
+
+void Torpedo::move()
+{
+    if (getDirection() == 0) {
+        moveTo(getX()+8, getY());
+    }
+    else {
+        moveTo(getX()-8, getY());
+    }
 }

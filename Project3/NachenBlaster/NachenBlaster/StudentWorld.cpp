@@ -108,6 +108,21 @@ void StudentWorld::updateStatusLine()
     setGameStatText(statusLine);
 }
 
+void StudentWorld::addProjectile(int ID, double startX, double startY)
+{
+    switch (ID) {
+        case IID_CABBAGE:
+            m_actors.push_back(new Cabbage(startX+12, startY, this));
+            playSound(SOUND_PLAYER_SHOOT);
+            break;
+        case IID_TORPEDO:
+            m_actors.push_back(new Torpedo(startX, startY, this));
+            playSound(SOUND_TORPEDO);
+        default:
+            break;
+    }
+}
+
 void StudentWorld::cleanUp()
 {
     vector<Actor*>::iterator it;

@@ -25,6 +25,7 @@ public:
     int maxAliensOnScreen();
     int getRemainingAliensToKill();
     void updateStatusLine();
+    void addProjectile(int ID, double startX, double startY);
 private:
     vector<Actor*> m_actors;
     int remainingAliensToKill;
