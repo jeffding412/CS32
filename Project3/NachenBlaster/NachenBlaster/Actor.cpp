@@ -1,5 +1,6 @@
 #include "Actor.h"
 #include "StudentWorld.h"
+#include <cstdlib>
 
 // Students:  Add code to this file, Actor.h, StudentWorld.h, and StudentWorld.cpp
 
@@ -68,6 +69,21 @@ int Ship::getHealth()
     return m_Health;
 }
 
+void Ship::decreaseHealth(int amount)
+{
+    m_Health -= amount;
+}
+
+void Ship::increaseHealth(int amount)
+{
+    if (m_Health + amount > 50) {
+        m_Health = 50;
+    }
+    else {
+        m_Health += amount;
+    }
+}
+
 ///////////////////////////////////////////////////
 ///////////// NachenBlaster ///////////////////////
 ///////////////////////////////////////////////////
@@ -83,6 +99,11 @@ void NachenBlaster::doSomething()
     if (isAlive()) {
         if (getWorld()->getKey(m_keyValue)) {
             move();
+        }
+        int collisionTarget = getWorld()->checkCollision(this);
+        if (collisionTarget != -1) {
+            sufferDamage(collisionTarget);
+            getWorld()->playSound(SOUND_BLAST);
         }
         if (getCabbage() < 30) {
             m_CabbagePoints++;
@@ -116,14 +137,62 @@ void NachenBlaster::move()
         case KEY_PRESS_SPACE:
             if (getCabbage() >= 5) {
                 m_CabbagePoints -= 5;
-                getWorld()->addProjectile(IID_CABBAGE, getX(), getY());
+                getWorld()->addObject(IID_CABBAGE, getX(), getY());
             }
             break;
         case KEY_PRESS_TAB:
             if (getTorpedoes() != 0) {
                 m_torpedoes--;
-                getWorld()->addProjectile(IID_TORPEDO, getX()+12, getY());
+                getWorld()->addObject(IID_TORPEDO, getX(), getY());
             }
+            break;
+        default:
+            break;
+    }
+}
+
+void NachenBlaster::sufferDamage(int collidedID)
+{
+    switch (collidedID) {
+        case IID_TURNIP:
+            decreaseHealth(2);
+            break;
+        case IID_TORPEDO:
+            decreaseHealth(8);
+            break;
+        case IID_SMALLGON:
+        case IID_SMOREGON:
+            decreaseHealth(5);
+            break;
+        case IID_SNAGGLEGON:
+            decreaseHealth(15);
+            break;
+        case IID_LIFE_GOODIE:
+        case IID_REPAIR_GOODIE:
+        case IID_TORPEDO_GOODIE:
+            goodiePickedUp(collidedID);
+            break;
+        default:
+            break;
+    }
+    if (getHealth() <= 0) {
+        setDead();
+    }
+}
+
+void NachenBlaster::goodiePickedUp(int collidedID)
+{
+    getWorld()->increaseScore(100);
+    getWorld()->playSound(SOUND_GOODIE);
+    switch (collidedID) {
+        case IID_LIFE_GOODIE:
+            getWorld()->incLives();
+            break;
+        case IID_REPAIR_GOODIE:
+            increaseHealth(10);
+            break;
+        case IID_TORPEDO_GOODIE:
+            addTorpedoes();
             break;
         default:
             break;
@@ -148,7 +217,6 @@ int NachenBlaster::getCabbage()
 ///////////////////////////////////////////////////
 //////////////// Projectile ///////////////////////
 ///////////////////////////////////////////////////
-
 Projectile::Projectile(int imageID, double startX, double startY, int dir, StudentWorld* world)
 :Actor(imageID, startX, startY, dir, 0.5, 1, world)
 {}
@@ -159,15 +227,14 @@ void Projectile::doSomething()
         if (isOffScreen()) {
             setDead();
         }
-        //todo: collision detection
         move();
-        //todo: collision detection
     }
 }
 
 bool Projectile::isOffScreen()
 {
-    if (getX() >= VIEW_WIDTH || getY() < 0) {
+    if (getX() >= VIEW_WIDTH || getX() < 0) {
+        //for some reason, the 2nd thign was getY()
         return true;
     }
     return false;
@@ -176,7 +243,6 @@ bool Projectile::isOffScreen()
 ///////////////////////////////////////////////////
 /////////////////// Cabbage ///////////////////////
 ///////////////////////////////////////////////////
-
 Cabbage::Cabbage(double startX, double startY, StudentWorld* world)
 :Projectile(IID_CABBAGE, startX, startY, 0, world)
 {}
@@ -190,9 +256,8 @@ void Cabbage::move()
 ///////////////////////////////////////////////////
 /////////////////// Torpedo ///////////////////////
 ///////////////////////////////////////////////////
-
-Torpedo::Torpedo(double startX, double startY, StudentWorld* world)
-:Projectile(IID_TORPEDO, startX, startY, 0, world)
+Torpedo::Torpedo(double startX, double startY, int dir, StudentWorld* world)
+:Projectile(IID_TORPEDO, startX, startY, dir, world)
 {}
 
 void Torpedo::move()
@@ -202,5 +267,318 @@ void Torpedo::move()
     }
     else {
         moveTo(getX()-8, getY());
+    }
+}
+
+///////////////////////////////////////////////////
+//////////////////// Turnip ///////////////////////
+///////////////////////////////////////////////////
+Turnip::Turnip(double startX, double startY, StudentWorld* world)
+:Projectile(IID_TURNIP, startX, startY, 0, world)
+{}
+
+void Turnip::move()
+{
+    moveTo(getX()-6, getY());
+    setDirection(getDirection()+20);
+}
+
+///////////////////////////////////////////////////
+///////////////////// Alien ///////////////////////
+///////////////////////////////////////////////////
+Alien::Alien(int imageID, double startX, double startY, StudentWorld* world, int startHealth)
+:Ship(imageID, startX, startY, 0, 1.5, 1, world, startHealth)
+{
+    m_travel_speed = 2.0;
+    m_flight_plan_length = 0;
+    m_direction = 0; //0 is going straight, 1 is going up, 2 is going down
+}
+
+void Alien::doSomething()
+{
+    if (isAlive()) {
+        if (getX() < 0) {
+            setDead();
+            getWorld()->subtractAlien();
+        }
+        int collisionTarget = getWorld()->checkCollision(this);
+        if (collisionTarget != -1) {
+            sufferDamage(collisionTarget);
+            if (collisionTarget == IID_NACHENBLASTER) {
+                getWorld()->getPlayer()->sufferDamage(getImageID());
+            }
+            if (!isAlive()) {
+                deathSequence();
+                getWorld()->killAlien();
+            }
+            else {
+                getWorld()->playSound(SOUND_BLAST);
+            }
+        }
+        if (needNewFlightPlan()) {
+            if (getY() >= VIEW_HEIGHT-1) {
+                setDirection(2);
+            }
+            else if (getY() <= 0) {
+                setDirection(1);
+            }
+            else if (getFlightPlanLength() == 0) {
+                switch (randInt(0, 2)) {
+                    case 0:
+                        setDirection(0);
+                        break;
+                    case 1:
+                        setDirection(1);
+                        break;
+                    case 2:
+                        setDirection(2);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            setFlightPlanLength(randInt(1, 32));
+        }
+        if (withinRangeNB()) {
+            if (!withinRangeAction())
+                move();
+        }
+        else {
+            move();
+        }
+    }
+}
+
+void Alien::move()
+{
+    switch (getDirection()) {
+        case 0:
+            moveTo(getX()-getTravelSpeed(), getY());
+            break;
+        case 1:
+            moveTo(getX()-getTravelSpeed(), getY()+getTravelSpeed());
+            break;
+        case 2:
+            moveTo(getX()-getTravelSpeed(), getY()-getTravelSpeed());
+            break;
+        default:
+            break;
+    }
+    m_flight_plan_length--;
+}
+
+bool Alien::withinRangeNB()
+{
+    double NBYCoord = getWorld()->getPlayer()->getY();
+    return (getWorld()->getPlayer()->getX() < getX()) && (abs(NBYCoord - getY()) <= 4);
+}
+
+bool Alien::needNewFlightPlan()
+{
+    return (getFlightPlanLength() == 0 || getY() >= VIEW_HEIGHT-1 || getY() <= 0);
+}
+
+double Alien::getTravelSpeed()
+{
+    return m_travel_speed;
+}
+
+void Alien::setTravelSpeed(double speed)
+{
+    m_travel_speed = speed;
+}
+int Alien::getFlightPlanLength()
+{
+    return m_flight_plan_length;
+}
+void Alien::setFlightPlanLength(int length)
+{
+    m_flight_plan_length = length;
+}
+
+int Alien::getDirection()
+{
+    return m_direction;
+}
+
+void Alien::setDirection(int direction)
+{
+    m_direction = direction;
+}
+
+void Alien::sufferDamage(int collidedID)
+{
+    switch (collidedID) {
+        case IID_CABBAGE:
+            decreaseHealth(2);
+            break;
+        case IID_TORPEDO:
+            decreaseHealth(8);
+            break;
+        case IID_NACHENBLASTER:
+            decreaseHealth(100);
+            break;
+        default:
+            break;
+    }
+    if (getHealth() <= 0) {
+        setDead();
+    }
+}
+
+///////////////////////////////////////////////////
+////////////////// Smallgon ///////////////////////
+///////////////////////////////////////////////////
+Smallgon::Smallgon(double startX, double startY, StudentWorld* world)
+:Alien(IID_SMALLGON, startX, startY, world, 5 * (1 + (world->getLevel() - 1) * 0.1))
+{}
+
+bool Smallgon::withinRangeAction()
+{
+    int oneInHoweverMany = (20/(getWorld()->getLevel())) + 5;
+    if (randInt(1, oneInHoweverMany) == 1) {
+        getWorld()->addObject(IID_TURNIP, getX(), getY());
+        return true;
+    }
+    return false;
+}
+
+void Smallgon::deathSequence()
+{
+    getWorld()->increaseScore(250);
+    getWorld()->playSound(SOUND_DEATH);
+    getWorld()->addObject(IID_EXPLOSION, getX(), getY());
+}
+
+///////////////////////////////////////////////////
+////////////////// Smoregon ///////////////////////
+///////////////////////////////////////////////////
+Smoregon::Smoregon(double startX, double startY, StudentWorld* world)
+:Alien(IID_SMOREGON, startX, startY, world, 5 * (1 + (world->getLevel() - 1) * 0.1))
+{}
+
+bool Smoregon::withinRangeAction()
+{
+    int oneInHoweverMany = (20/(getWorld()->getLevel())) + 5;
+    if (randInt(1, oneInHoweverMany) == 1) {
+        getWorld()->addObject(IID_TURNIP, getX(), getY());
+        return true;
+    }
+    if (randInt(1, oneInHoweverMany) == 1) {
+        setDirection(0);
+        setFlightPlanLength(VIEW_WIDTH);
+        setTravelSpeed(5);
+    }
+    return false;
+}
+
+void Smoregon::deathSequence()
+{
+    getWorld()->increaseScore(250);
+    getWorld()->playSound(SOUND_DEATH);
+    getWorld()->addObject(IID_EXPLOSION, getX(), getY());
+    if (randInt(1, 3) == 1) {
+        if (randInt(1, 2) == 1) {
+            getWorld()->addObject(IID_REPAIR_GOODIE, getX(), getY());
+        }
+        else {
+            getWorld()->addObject(IID_TORPEDO_GOODIE, getX(), getY());
+        }
+    }
+}
+
+///////////////////////////////////////////////////
+////////////////// Snagglegon /////////////////////
+///////////////////////////////////////////////////
+Snagglegon::Snagglegon(double startX, double startY, StudentWorld* world)
+:Alien(IID_SNAGGLEGON, startX, startY, world, 10 * (1 + (world->getLevel() - 1) * 0.1))
+{
+    setDirection(2);
+    setTravelSpeed(1.75);
+}
+
+bool Snagglegon::withinRangeAction()
+{
+    int oneInHoweverMany = (15/(getWorld()->getLevel())) + 10;
+    if (randInt(1, oneInHoweverMany) == 1) {
+        getWorld()->addObject(-1, getX()-14, getY());
+        return true;
+    }
+    return false;
+}
+
+void Snagglegon::deathSequence()
+{
+    getWorld()->increaseScore(1000);
+    getWorld()->playSound(SOUND_DEATH);
+    getWorld()->addObject(IID_EXPLOSION, getX(), getY());
+    if (randInt(1, 6) == 1) {
+        getWorld()->addObject(IID_LIFE_GOODIE, getX(), getY());
+    }
+}
+
+///////////////////////////////////////////////////
+//////////////////// Goodie ///////////////////////
+///////////////////////////////////////////////////
+Goodie::Goodie(int imageID, double startX, double startY, StudentWorld* world)
+:Actor(imageID, startX, startY, 0, 0.5, 1, world)
+{}
+
+void Goodie::doSomething()
+{
+    if (isAlive()) {
+        if (getX() < 0 || getY() < 0 || getY() >= VIEW_HEIGHT) {
+            setDead();
+        }
+        move();
+    }
+}
+
+void Goodie::move()
+{
+    moveTo(getX()-0.75, getY()-0.75);
+}
+
+///////////////////////////////////////////////////
+//////////////// Extra Life Goodie ////////////////
+///////////////////////////////////////////////////
+ExtraLifeGoodie::ExtraLifeGoodie(double startX, double startY, StudentWorld* world)
+:Goodie(IID_LIFE_GOODIE, startX, startY, world)
+{}
+
+///////////////////////////////////////////////////
+////////////////// Repair Goodie //////////////////
+///////////////////////////////////////////////////
+RepairGoodie::RepairGoodie(double startX, double startY, StudentWorld* world)
+:Goodie(IID_REPAIR_GOODIE, startX, startY, world)
+{}
+
+///////////////////////////////////////////////////
+//////////////// Torpedo Goodie ///////////////////
+///////////////////////////////////////////////////
+TorpedoGoodie::TorpedoGoodie(double startX, double startY, StudentWorld* world)
+:Goodie(IID_TORPEDO_GOODIE, startX, startY, world)
+{}
+
+///////////////////////////////////////////////////
+////////////////// Explosion //////////////////////
+///////////////////////////////////////////////////
+Explosion::Explosion(double startX, double startY, StudentWorld* world)
+:Actor(IID_EXPLOSION, startX, startY, 0, 1, 0, world)
+{
+    m_frameNumber = 0;
+}
+
+void Explosion::doSomething()
+{
+    setSize(getSize()*1.5);
+    move();
+}
+
+void Explosion::move()
+{
+    m_frameNumber++;
+    if (m_frameNumber >= 4) {
+        setDead();
     }
 }

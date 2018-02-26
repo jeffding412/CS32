@@ -9,8 +9,6 @@ using namespace std;
 
 // Students:  Add code to this file, StudentWorld.cpp, Actor.h, and Actor.cpp
 
-void addStar();
-
 class StudentWorld : public GameWorld
 {
 public:
@@ -19,13 +17,17 @@ public:
     virtual int init();
     virtual int move();
     virtual void cleanUp();
-    void addStar();
     void removeDeadObjects();
     void killAlien();
+    void subtractAlien();
+    void toAddNewAlien();
     int maxAliensOnScreen();
     int getRemainingAliensToKill();
     void updateStatusLine();
-    void addProjectile(int ID, double startX, double startY);
+    void addObject(int ID, double startX, double startY);
+    int checkCollision(Actor* actor);
+    bool canCollide(Actor* actor1, Actor* actor2);
+    NachenBlaster* getPlayer() const;
 private:
     vector<Actor*> m_actors;
     int remainingAliensToKill;
