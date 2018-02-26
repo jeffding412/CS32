@@ -14,12 +14,12 @@ class Actor : public GraphObject
 {
 public:
     Actor(int imageID, double startX, double startY, int dir, double size, int depth, StudentWorld* world);
-    StudentWorld* getWorld() const;
-    bool isAlive() const;
-    void setDead();
     virtual void doSomething() = 0;
     virtual void move() = 0;
+    StudentWorld* getWorld() const;
+    bool isAlive() const;
     int getImageID() const;
+    void setDead();
 private:
     bool m_Status;
     StudentWorld* m_world;
@@ -48,9 +48,9 @@ public:
     virtual void doSomething() = 0;
     virtual void move() = 0;
     virtual void sufferDamage(int collidedID) = 0;
+    int getHealth() const;
     void decreaseHealth(int amount);
     void increaseHealth(int amount);
-    int getHealth();
 private:
     int m_Health;
 };
@@ -65,9 +65,9 @@ public:
     virtual void doSomething();
     virtual void move();
     virtual void sufferDamage(int collidedID);
-    int getTorpedoes();
+    int getTorpedoes() const;
+    int getCabbage() const;
     void addTorpedoes();
-    int getCabbage();
     void goodiePickedUp(int collidedID);
 private:
     int m_CabbagePoints;
@@ -84,7 +84,7 @@ public:
     Projectile(int imageID, double startX, double startY, int dir, StudentWorld* world);
     virtual void doSomething();
     virtual void move() = 0;
-    bool isOffScreen();
+    bool isOffScreen() const;
 private:
 };
 
@@ -132,14 +132,14 @@ public:
     virtual void move();
     virtual void sufferDamage(int collidedID);
     virtual void deathSequence() = 0;
-    double getTravelSpeed();
+    double getTravelSpeed() const;
+    int getFlightPlanLength() const;
+    int getDirection() const;
+    bool needNewFlightPlan() const;
     void setTravelSpeed(double speed);
-    int getFlightPlanLength();
     void setFlightPlanLength(int length);
-    int getDirection();
     void setDirection(int direction);
-    bool needNewFlightPlan();
-    bool withinRangeNB();
+    bool withinRangeNB() const;
     virtual bool withinRangeAction() = 0;
 private:
     double m_travel_speed;

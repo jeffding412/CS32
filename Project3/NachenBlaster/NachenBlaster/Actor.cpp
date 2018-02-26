@@ -25,14 +25,14 @@ bool Actor::isAlive() const
     return m_Status;
 }
 
-void Actor::setDead()
-{
-    m_Status = false;
-}
-
 int Actor::getImageID() const
 {
     return m_id;
+}
+
+void Actor::setDead()
+{
+    m_Status = false;
 }
 
 ///////////////////////////////////////////////////
@@ -64,7 +64,7 @@ Ship::Ship(int imageID, double startX, double startY, int dir, double size, int 
     m_Health = startHealth;
 }
 
-int Ship::getHealth()
+int Ship::getHealth() const
 {
     return m_Health;
 }
@@ -180,6 +180,21 @@ void NachenBlaster::sufferDamage(int collidedID)
     }
 }
 
+int NachenBlaster::getTorpedoes() const
+{
+    return m_torpedoes;
+}
+
+int NachenBlaster::getCabbage() const
+{
+    return m_CabbagePoints;
+}
+
+void NachenBlaster::addTorpedoes()
+{
+    m_torpedoes += 5;
+}
+
 void NachenBlaster::goodiePickedUp(int collidedID)
 {
     getWorld()->increaseScore(100);
@@ -199,21 +214,6 @@ void NachenBlaster::goodiePickedUp(int collidedID)
     }
 }
 
-int NachenBlaster::getTorpedoes()
-{
-    return m_torpedoes;
-}
-
-void NachenBlaster::addTorpedoes()
-{
-    m_torpedoes += 5;
-}
-
-int NachenBlaster::getCabbage()
-{
-    return m_CabbagePoints;
-}
-
 ///////////////////////////////////////////////////
 //////////////// Projectile ///////////////////////
 ///////////////////////////////////////////////////
@@ -231,7 +231,7 @@ void Projectile::doSomething()
     }
 }
 
-bool Projectile::isOffScreen()
+bool Projectile::isOffScreen() const
 {
     if (getX() >= VIEW_WIDTH || getX() < 0) {
         //for some reason, the 2nd thign was getY()
@@ -367,45 +367,6 @@ void Alien::move()
     m_flight_plan_length--;
 }
 
-bool Alien::withinRangeNB()
-{
-    double NBYCoord = getWorld()->getPlayer()->getY();
-    return (getWorld()->getPlayer()->getX() < getX()) && (abs(NBYCoord - getY()) <= 4);
-}
-
-bool Alien::needNewFlightPlan()
-{
-    return (getFlightPlanLength() == 0 || getY() >= VIEW_HEIGHT-1 || getY() <= 0);
-}
-
-double Alien::getTravelSpeed()
-{
-    return m_travel_speed;
-}
-
-void Alien::setTravelSpeed(double speed)
-{
-    m_travel_speed = speed;
-}
-int Alien::getFlightPlanLength()
-{
-    return m_flight_plan_length;
-}
-void Alien::setFlightPlanLength(int length)
-{
-    m_flight_plan_length = length;
-}
-
-int Alien::getDirection()
-{
-    return m_direction;
-}
-
-void Alien::setDirection(int direction)
-{
-    m_direction = direction;
-}
-
 void Alien::sufferDamage(int collidedID)
 {
     switch (collidedID) {
@@ -424,6 +385,47 @@ void Alien::sufferDamage(int collidedID)
     if (getHealth() <= 0) {
         setDead();
     }
+}
+
+double Alien::getTravelSpeed() const
+{
+    return m_travel_speed;
+}
+
+int Alien::getFlightPlanLength() const
+{
+    return m_flight_plan_length;
+}
+
+int Alien::getDirection() const
+{
+    return m_direction;
+}
+
+bool Alien::needNewFlightPlan() const
+{
+    return (getFlightPlanLength() == 0 || getY() >= VIEW_HEIGHT-1 || getY() <= 0);
+}
+
+void Alien::setFlightPlanLength(int length)
+{
+    m_flight_plan_length = length;
+}
+
+void Alien::setTravelSpeed(double speed)
+{
+    m_travel_speed = speed;
+}
+
+void Alien::setDirection(int direction)
+{
+    m_direction = direction;
+}
+
+bool Alien::withinRangeNB() const
+{
+    double NBYCoord = getWorld()->getPlayer()->getY();
+    return (getWorld()->getPlayer()->getX() < getX()) && (abs(NBYCoord - getY()) <= 4);
 }
 
 ///////////////////////////////////////////////////

@@ -12,6 +12,7 @@ GameWorld* createStudentWorld(string assetDir)
 
 // Students:  Add code to this file, StudentWorld.h, Actor.h and Actor.cpp
 
+//Constructor
 StudentWorld::StudentWorld(string assetDir)
 : GameWorld(assetDir)
 {
@@ -19,15 +20,13 @@ StudentWorld::StudentWorld(string assetDir)
     number_aliens = 0;
 }
 
+//Destructor
 StudentWorld::~StudentWorld()
 {
-    while (getLives() != 0)
-    {
-        decLives();
-    }
     cleanUp();
 }
 
+//Populates the game
 int StudentWorld::init()
 {
     m_player = new NachenBlaster(this);
@@ -39,39 +38,71 @@ int StudentWorld::init()
     return GWSTATUS_CONTINUE_GAME;
 }
 
+//Controls actions in one tick
 int StudentWorld::move()
 {
     updateStatusLine();
     if (m_player->isAlive()) {
         m_player->doSomething();
     }
+    //go through all objects in m_actors
     for (int i = 0; i < m_actors.size(); i++) {
         if (m_actors[i]->isAlive()) {
             m_actors[i]->doSomething();
         }
+        //if the player dies
         if (!m_player->isAlive()) {
             decLives();
             return GWSTATUS_PLAYER_DIED;
         }
+        //if no more aliens, next level
         if (getRemainingAliensToKill() == 0) {
+            playSound(SOUND_FINISHED_LEVEL);
             return GWSTATUS_FINISHED_LEVEL;
         }
     }
+    //1/15 chance to add Star
     if (randInt(1, 15) == 1) {
         addObject(IID_STAR, VIEW_WIDTH-1, randInt(0, VIEW_HEIGHT-1));
     }
+    //controls how another alien is added
     toAddNewAlien();
     removeDeadObjects();
     return GWSTATUS_CONTINUE_GAME;
 }
 
+//Deletes all objects and resets the world
+void StudentWorld::cleanUp()
+{
+    vector<Actor*>::iterator it;
+    it = m_actors.begin();
+    //iterate through m_actors
+    while (it != m_actors.end()) {
+        //delete Actor being pointed to
+        delete (*it);
+        //move on to next Actor
+        it = m_actors.erase(it);
+    }
+    if (m_player != nullptr) {
+        delete m_player;
+        m_player = nullptr;
+    }
+    remainingAliensToKill = 6 + (4 * getLevel());
+    number_aliens = 0;
+}
+
+//Deletes dead objects
 void StudentWorld::removeDeadObjects()
 {
     vector<Actor*>::iterator it;
     it = m_actors.begin();
+    //iterate through m_actors
     while (it != m_actors.end()) {
+        //if Actor isn't alive
         if ((*it)->isAlive() == false) {
+            //delete Actor being pointed to
             delete (*it);
+            //move on to next Actor
             it = m_actors.erase(it);
         }
         else {
@@ -80,27 +111,65 @@ void StudentWorld::removeDeadObjects()
     }
 }
 
+//Subtracts number_aliens and remaining_aliens
 void StudentWorld::killAlien()
 {
     remainingAliensToKill--;
     number_aliens--;
 }
 
+//Subtracts number_aliens
 void StudentWorld::subtractAlien()
 {
     number_aliens--;
 }
 
-int StudentWorld::maxAliensOnScreen()
+//Decides whether or not to add alien and which alien to add
+void StudentWorld::toAddNewAlien()
+{
+    int M = maxAliensOnScreen();
+    int R = getRemainingAliensToKill();
+    int MRmin;
+    if (M < R) {
+        MRmin = M;
+    }
+    else {
+        MRmin = R;
+    }
+    //if current number of aliens is less than the min of M and R
+    if (number_aliens < MRmin)
+    {
+        int s1 = 60;
+        int s2 = 20 + getLevel() * 5;
+        int s3 = 5 + getLevel() * 10;
+        int s = s1 + s2 + s3;
+        int randomInt = randInt(1, s);
+        //s1/s chance of 1, s2/s chance of 2, s3/s chance of 3
+        if (randomInt <= s1) {
+            addObject(IID_SMALLGON, VIEW_WIDTH-1, randInt(0, VIEW_HEIGHT-1));
+        }
+        else if (randomInt <= (s1+s2)) {
+            addObject(IID_SMOREGON, VIEW_WIDTH-1, randInt(0, VIEW_HEIGHT-1));
+        }
+        else {
+            addObject(IID_SNAGGLEGON, VIEW_WIDTH-1, randInt(0, VIEW_HEIGHT-1));
+        }
+    }
+}
+
+//Returns maximum number of aliens that can be on screen
+int StudentWorld::maxAliensOnScreen() const
 {
     return 4 + (0.5*getLevel());
 }
 
-int StudentWorld::getRemainingAliensToKill()
+//Returns remainingAliensToKill
+int StudentWorld::getRemainingAliensToKill() const
 {
     return remainingAliensToKill;
 }
 
+//Prints status line
 void StudentWorld::updateStatusLine()
 {
     int healthPercentage = m_player->getHealth() * 2;
@@ -111,6 +180,7 @@ void StudentWorld::updateStatusLine()
     setGameStatText(statusLine);
 }
 
+//Adds a specific object at a specific X and Y
 void StudentWorld::addObject(int ID, double startX, double startY)
 {
     switch (ID) {
@@ -162,41 +232,9 @@ void StudentWorld::addObject(int ID, double startX, double startY)
     }
 }
 
-void StudentWorld::toAddNewAlien()
-{
-    int M = maxAliensOnScreen();
-    int R = getRemainingAliensToKill();
-    int MRmin;
-    if (M < R) {
-        MRmin = M;
-    }
-    else {
-        MRmin = R;
-    }
-    if (number_aliens < MRmin)
-    {
-        int s1 = 60;
-        int s2 = 20 + getLevel() * 5;
-        int s3 = 5 + getLevel() * 10;
-        int s = s1 + s2 + s3;
-        int randomInt = randInt(1, s);
-        if (randomInt <= s1) {
-            addObject(IID_SMALLGON, VIEW_WIDTH-1, randInt(0, VIEW_HEIGHT-1));
-        }
-        else if (randomInt <= (s1+s2)) {
-            addObject(IID_SMOREGON, VIEW_WIDTH-1, randInt(0, VIEW_HEIGHT-1));
-        }
-        else {
-            addObject(IID_SNAGGLEGON, VIEW_WIDTH-1, randInt(0, VIEW_HEIGHT-1));
-        }
-    }
-}
-
-NachenBlaster* StudentWorld::getPlayer() const
-{
-    return m_player;
-}
-
+//Returns whether or not actor1 and actor2 can collide based on ID
+//Checks whether or not an Alien object can collide with anything
+//Then checks whether or not the player can collide with anything
 bool StudentWorld::canCollide(Actor* actor1, Actor* actor2)
 {
     int actor1ID = actor1->getImageID();
@@ -242,6 +280,7 @@ bool StudentWorld::canCollide(Actor* actor1, Actor* actor2)
     }
 }
 
+//Returns the image ID of collided object or -1
 int StudentWorld::checkCollision(Actor* actor)
 {
     double x1 = actor->getX();
@@ -252,6 +291,7 @@ int StudentWorld::checkCollision(Actor* actor)
     double y2;
     double r2;
     
+    //check if an Alien is colliding with the Player
     if (canCollide(actor, getPlayer())) {
         x2 = m_player->getX();
         y2 = m_player->getY();
@@ -262,6 +302,7 @@ int StudentWorld::checkCollision(Actor* actor)
         }
     }
     
+    //if the actor is the Player, check if it collides with turnips, goodies, or torpedoes
     if (actor == getPlayer()) {
         for (int i = 0; i < m_actors.size(); i++) {
             if (canCollide(actor, m_actors[i])) {
@@ -270,6 +311,7 @@ int StudentWorld::checkCollision(Actor* actor)
                 r2 = m_actors[i]->getRadius();
                 double distance = sqrt(pow((x2-x1), 2)+pow((y2-y1), 2));
                 if (distance < 0.75*(r1+r2)) {
+                    //if its any of these objects, set it to dead and return the ID
                     switch (m_actors[i]->getImageID()) {
                         case IID_TORPEDO:
                         case IID_TURNIP:
@@ -287,6 +329,7 @@ int StudentWorld::checkCollision(Actor* actor)
         }
     }
     
+    //check if Aliens are hit with cabbages or torpedoes
     for (int i = 0; i < m_actors.size(); i++) {
         if (m_actors[i] != actor && canCollide(actor, m_actors[i])) {
             x2 = m_actors[i]->getX();
@@ -310,17 +353,8 @@ int StudentWorld::checkCollision(Actor* actor)
     return -1;
 }
 
-void StudentWorld::cleanUp()
+//Return m_player
+NachenBlaster* StudentWorld::getPlayer() const
 {
-    vector<Actor*>::iterator it;
-    it = m_actors.begin();
-    while (it != m_actors.end()) {
-        delete (*it);
-        it = m_actors.erase(it);
-    }
-    if (getLives() != 0) {
-        delete m_player;
-    }
-    remainingAliensToKill = 6 + (4 * getLevel());
-    number_aliens = 0;
+    return m_player;
 }
