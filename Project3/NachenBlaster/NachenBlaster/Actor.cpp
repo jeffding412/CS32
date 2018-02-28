@@ -15,6 +15,9 @@ Actor::Actor(int imageID, double startX, double startY, int dir, double size, in
     m_Status = true;
 }
 
+Actor::~Actor()
+{}
+
 StudentWorld* Actor::getWorld() const
 {
     return m_world;
@@ -42,6 +45,9 @@ Star::Star(double startX, double startY, StudentWorld* world)
 :Actor(IID_STAR, startX, startY, 0, 0.01*randInt(5, 50), 3, world)
 {}
 
+Star::~Star()
+{}
+
 void Star::move()
 {
     moveTo(getX()-1, getY());
@@ -63,6 +69,9 @@ Ship::Ship(int imageID, double startX, double startY, int dir, double size, int 
 {
     m_Health = startHealth;
 }
+
+Ship::~Ship()
+{}
 
 int Ship::getHealth() const
 {
@@ -93,6 +102,9 @@ NachenBlaster::NachenBlaster(StudentWorld* world)
     m_CabbagePoints = 30;
     m_torpedoes = 0;
 }
+
+NachenBlaster::~NachenBlaster()
+{}
 
 void NachenBlaster::doSomething()
 {
@@ -221,6 +233,9 @@ Projectile::Projectile(int imageID, double startX, double startY, int dir, Stude
 :Actor(imageID, startX, startY, dir, 0.5, 1, world)
 {}
 
+Projectile::~Projectile()
+{}
+
 void Projectile::doSomething()
 {
     if (isAlive()) {
@@ -247,6 +262,9 @@ Cabbage::Cabbage(double startX, double startY, StudentWorld* world)
 :Projectile(IID_CABBAGE, startX, startY, 0, world)
 {}
 
+Cabbage::~Cabbage()
+{}
+
 void Cabbage::move()
 {
     moveTo(getX()+8, getY());
@@ -258,6 +276,9 @@ void Cabbage::move()
 ///////////////////////////////////////////////////
 Torpedo::Torpedo(double startX, double startY, int dir, StudentWorld* world)
 :Projectile(IID_TORPEDO, startX, startY, dir, world)
+{}
+
+Torpedo::~Torpedo()
 {}
 
 void Torpedo::move()
@@ -277,6 +298,9 @@ Turnip::Turnip(double startX, double startY, StudentWorld* world)
 :Projectile(IID_TURNIP, startX, startY, 0, world)
 {}
 
+Turnip::~Turnip()
+{}
+
 void Turnip::move()
 {
     moveTo(getX()-6, getY());
@@ -293,6 +317,9 @@ Alien::Alien(int imageID, double startX, double startY, StudentWorld* world, int
     m_flight_plan_length = 0;
     m_direction = 0; //0 is going straight, 1 is going up, 2 is going down
 }
+
+Alien::~Alien()
+{}
 
 void Alien::doSomething()
 {
@@ -435,6 +462,9 @@ Smallgon::Smallgon(double startX, double startY, StudentWorld* world)
 :Alien(IID_SMALLGON, startX, startY, world, 5 * (1 + (world->getLevel() - 1) * 0.1))
 {}
 
+Smallgon::~Smallgon()
+{}
+
 bool Smallgon::withinRangeAction()
 {
     int oneInHoweverMany = (20/(getWorld()->getLevel())) + 5;
@@ -459,14 +489,18 @@ Smoregon::Smoregon(double startX, double startY, StudentWorld* world)
 :Alien(IID_SMOREGON, startX, startY, world, 5 * (1 + (world->getLevel() - 1) * 0.1))
 {}
 
+Smoregon::~Smoregon()
+{}
+
 bool Smoregon::withinRangeAction()
 {
     int oneInHoweverMany = (20/(getWorld()->getLevel())) + 5;
-    if (randInt(1, oneInHoweverMany) == 1) {
+    int actionNumber = randInt(1, oneInHoweverMany);
+    if (actionNumber == 1) {
         getWorld()->addObject(IID_TURNIP, getX(), getY());
         return true;
     }
-    if (randInt(1, oneInHoweverMany) == 1) {
+    else if (actionNumber == 2) {
         setDirection(0);
         setFlightPlanLength(VIEW_WIDTH);
         setTravelSpeed(5);
@@ -499,6 +533,9 @@ Snagglegon::Snagglegon(double startX, double startY, StudentWorld* world)
     setTravelSpeed(1.75);
 }
 
+Snagglegon::~Snagglegon()
+{}
+
 bool Snagglegon::withinRangeAction()
 {
     int oneInHoweverMany = (15/(getWorld()->getLevel())) + 10;
@@ -526,6 +563,9 @@ Goodie::Goodie(int imageID, double startX, double startY, StudentWorld* world)
 :Actor(imageID, startX, startY, 0, 0.5, 1, world)
 {}
 
+Goodie::~Goodie()
+{}
+
 void Goodie::doSomething()
 {
     if (isAlive()) {
@@ -548,6 +588,9 @@ ExtraLifeGoodie::ExtraLifeGoodie(double startX, double startY, StudentWorld* wor
 :Goodie(IID_LIFE_GOODIE, startX, startY, world)
 {}
 
+ExtraLifeGoodie::~ExtraLifeGoodie()
+{}
+
 ///////////////////////////////////////////////////
 ////////////////// Repair Goodie //////////////////
 ///////////////////////////////////////////////////
@@ -555,11 +598,17 @@ RepairGoodie::RepairGoodie(double startX, double startY, StudentWorld* world)
 :Goodie(IID_REPAIR_GOODIE, startX, startY, world)
 {}
 
+RepairGoodie::~RepairGoodie()
+{}
+
 ///////////////////////////////////////////////////
 //////////////// Torpedo Goodie ///////////////////
 ///////////////////////////////////////////////////
 TorpedoGoodie::TorpedoGoodie(double startX, double startY, StudentWorld* world)
 :Goodie(IID_TORPEDO_GOODIE, startX, startY, world)
+{}
+
+TorpedoGoodie::~TorpedoGoodie()
 {}
 
 ///////////////////////////////////////////////////
@@ -570,6 +619,9 @@ Explosion::Explosion(double startX, double startY, StudentWorld* world)
 {
     m_frameNumber = 0;
 }
+
+Explosion::~Explosion()
+{}
 
 void Explosion::doSomething()
 {
