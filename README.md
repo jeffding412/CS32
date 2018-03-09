@@ -12,6 +12,6 @@ These are my solutions to all UCLA CS32 HW/Projects from Winter of 2017 with Pro
 | ---- | ---- |
 | 1 | 94/100 |
 | 2 | 100/100 |
-| 3 |   |
+| 3 | 100/100  |
 | 4 |   |
 | 5 |   |
