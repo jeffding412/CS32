@@ -9,8 +9,6 @@
 #ifndef MyHash_h
 #define MyHash_h
 
-#include "provided.h"
-
 template<typename KeyType, typename ValueType>
 class MyHash
 {
@@ -123,6 +121,65 @@ void MyHash<KeyType, ValueType>::reset()
         m_buckets[i] = nullptr;
     }
     m_numberNodes = 0;
+}
+
+template<typename KeyType, typename ValueType>
+void MyHash<KeyType, ValueType>::associate(const KeyType& key, const ValueType& value)
+{
+    Node *n = find(key);
+    if (n != nullptr) {
+        n->m_value = value;
+        return;
+    }
+    m_numberNodes++;
+    int targetBucketNumber = getBucketNumber(key);
+    n = new Node;                                       //create a new node
+    n->m_key = key;                                     //set the new node key and value
+    n->m_value = value;
+    n->next = m_buckets[targetBucketNumber];            //put the node at the front of the Bucket's Linked List
+    m_buckets[targetBucketNumber] = n;                  //Target Bucket now points to new Node
+    
+    if (getLoadFactor() > m_maxLoadFactor) {
+        m_maxBuckets *= 2;
+        Node** newBucket = new Node*[m_maxBuckets];
+        for (int i = 0; i < m_maxBuckets; i++) {        //sets each bucket to unused
+            newBucket[i] = nullptr;
+        }
+        
+        for (int i = 0; i < m_maxBuckets/2; i++) {
+            if (m_buckets[i] != nullptr) {
+                Node *p = m_buckets[i];         //Node pointer p points to head
+                while (p != nullptr) {          //while pointer p points to a valid pointer
+                    n = p->next;                //Node pointer n that points to the next Node
+                    
+                    targetBucketNumber = getBucketNumber(p->m_key);
+                    p->next = newBucket[targetBucketNumber];
+                    newBucket[targetBucketNumber] = p;
+                    
+                    p = n;                      //Node pointer p now points to the next Node
+                }
+                m_buckets[i] = nullptr;
+            }
+        }
+        delete m_buckets;
+        m_buckets = newBucket;
+    }
+}
+
+// for a map that can't be modified, return a pointer to const ValueType
+template<typename KeyType, typename ValueType>
+const ValueType* MyHash<KeyType, ValueType>::find(const KeyType& key) const
+{
+    int targetBucketNumber = getBucketNumber(key);
+    //traverse the Linked List and return pointer to Node if the key is in the Linked List
+    Node *p = m_buckets[targetBucketNumber];
+    while (p != nullptr) {
+        if (p->m_key == key) {
+            return p;
+        }
+        p = p->next;
+    }
+    return nullptr;
 }
 
 template<typename KeyType, typename ValueType>
