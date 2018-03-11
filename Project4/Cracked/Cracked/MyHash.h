@@ -42,7 +42,7 @@ private:
     
     Node** m_buckets;       //dynamically allocated array of pointers to Nodes
     int m_maxBuckets;       //maximum number of buckets
-    int m_maxLoadFactor;    //max load factor
+    double m_maxLoadFactor; //max load factor
     int m_numberNodes;      //current number of Nodes
 };
 
@@ -109,4 +109,16 @@ void MyHash<KeyType, ValueType>::reset()
         m_buckets[i] = nullptr;
     }
     m_numberNodes = 0;
+}
+
+template<typename KeyType, typename ValueType>
+int MyHash<KeyType, ValueType>::getNumItems() const
+{
+    return m_numberNodes;
+}
+
+template<typename KeyType, typename ValueType>
+double MyHash<KeyType, ValueType>::getLoadFactor() const
+{
+    return ((1.0) * m_numberNodes) / m_maxBuckets;
 }
