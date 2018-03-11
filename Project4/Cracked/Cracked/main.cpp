@@ -7,6 +7,7 @@
 //
 
 #include <iostream>
+#include "MyHash.h"
 using namespace std;
 
 int main() {

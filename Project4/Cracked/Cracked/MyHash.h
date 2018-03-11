@@ -74,6 +74,39 @@ MyHash<KeyType, ValueType>::MyHash(double maxLoadFactor)
 template<typename KeyType, typename ValueType>
 MyHash<KeyType, ValueType>::~MyHash()
 {
-    
+    for (int i = 0; i < m_maxBuckets; i++) {
+        if (m_buckets[i] != nullptr) {
+            Node *p = m_buckets[i];         //Node pointer p points to head
+            while (p != nullptr) {          //while pointer p points to a valid pointer
+                Node *n = p->next;          //create a Node pointer n that points to the next Node
+                delete p;                   //delete current Node
+                p = n;                      //Node pointer p now points to the next Node
+            }
+        }
+    }
+    delete [] m_buckets;
+    m_numberNodes = 0;
 }
 
+template<typename KeyType, typename ValueType>
+void MyHash<KeyType, ValueType>::reset()
+{
+    for (int i = 0; i < m_maxBuckets; i++) {
+        if (m_buckets[i] != nullptr) {
+            Node *p = m_buckets[i];         //Node pointer p points to head
+            while (p != nullptr) {          //while pointer p points to a valid pointer
+                Node *n = p->next;          //create a Node pointer n that points to the next Node
+                delete p;                   //delete current Node
+                p = n;                      //Node pointer p now points to the next Node
+            }
+        }
+    }
+    delete [] m_buckets;
+    
+    m_maxBuckets = 100;
+    m_buckets = new Node*[m_maxBuckets];
+    for (int i = 0; i < m_maxBuckets; i++) {    //sets each bucket to unused
+        m_buckets[i] = nullptr;
+    }
+    m_numberNodes = 0;
+}
