@@ -8,8 +8,16 @@
 
 #include <iostream>
 #include "MyHash.h"
+#include <string>
 using namespace std;
 
 int main() {
-    cout << "Hello World" << endl;
+    MyHash<int, int> hashTable(0.01);
+    
+    cout << hashTable.getLoadFactor() << endl;
+    hashTable.associate(2010, 981);
+    hashTable.associate(3010, 900);
+    hashTable.reset();
+    cout << hashTable.getLoadFactor() << endl;
+    cout << "Passed all tests" << endl;
 }

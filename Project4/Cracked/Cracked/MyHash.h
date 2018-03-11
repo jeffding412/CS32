@@ -126,14 +126,14 @@ void MyHash<KeyType, ValueType>::reset()
 template<typename KeyType, typename ValueType>
 void MyHash<KeyType, ValueType>::associate(const KeyType& key, const ValueType& value)
 {
-    Node *n = find(key);
-    if (n != nullptr) {
-        n->m_value = value;
+    ValueType *v = find(key);
+    if (v != nullptr) {
+        *v = value;
         return;
     }
     m_numberNodes++;
     int targetBucketNumber = getBucketNumber(key);
-    n = new Node;                                       //create a new node
+    Node *n = new Node;                                 //create a new node
     n->m_key = key;                                     //set the new node key and value
     n->m_value = value;
     n->next = m_buckets[targetBucketNumber];            //put the node at the front of the Bucket's Linked List
@@ -166,7 +166,7 @@ void MyHash<KeyType, ValueType>::associate(const KeyType& key, const ValueType& 
     }
 }
 
-// for a map that can't be modified, return a pointer to const ValueType
+// for a map that can't be modified, return a ValueType pointer to const ValueType
 template<typename KeyType, typename ValueType>
 const ValueType* MyHash<KeyType, ValueType>::find(const KeyType& key) const
 {
@@ -175,7 +175,9 @@ const ValueType* MyHash<KeyType, ValueType>::find(const KeyType& key) const
     Node *p = m_buckets[targetBucketNumber];
     while (p != nullptr) {
         if (p->m_key == key) {
-            return p;
+            ValueType* valuePtr;
+            valuePtr = &p->m_value;
+            return valuePtr;
         }
         p = p->next;
     }
