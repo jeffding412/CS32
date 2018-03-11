@@ -9,6 +9,8 @@
 #ifndef MyHash_h
 #define MyHash_h
 
+#include "provided.h"
+
 template<typename KeyType, typename ValueType>
 class MyHash
 {
@@ -40,6 +42,8 @@ private:
         Node* next;
     };
     
+    unsigned int getBucketNumber(const KeyType& key) const;
+    
     Node** m_buckets;       //dynamically allocated array of pointers to Nodes
     int m_maxBuckets;       //maximum number of buckets
     double m_maxLoadFactor; //max load factor
@@ -48,7 +52,17 @@ private:
 
 #endif /* MyHash_h */
 
-//MyHash.cpp
+//MyHash implementation
+
+template<typename KeyType, typename ValueType>
+unsigned int MyHash<KeyType, ValueType>::getBucketNumber(const KeyType& key) const
+{
+    unsigned int hash(const KeyType& k); // prototype
+    unsigned int h = hash(key);
+    
+    unsigned int bucketNum = h%m_maxBuckets;
+    return bucketNum;
+}
 
 template<typename KeyType, typename ValueType>
 MyHash<KeyType, ValueType>::MyHash(double maxLoadFactor)

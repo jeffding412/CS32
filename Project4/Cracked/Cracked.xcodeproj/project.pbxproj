@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A901E0742054EA0500DA8825 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A901E0732054EA0500DA8825 /* main.cpp */; };
+		A901E07D205506F600DA8825 /* WordList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A901E07C205506F600DA8825 /* WordList.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -26,6 +27,8 @@
 		A901E0702054EA0500DA8825 /* Cracked */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Cracked; sourceTree = BUILT_PRODUCTS_DIR; };
 		A901E0732054EA0500DA8825 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		A901E07B2054EA3B00DA8825 /* MyHash.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyHash.h; sourceTree = "<group>"; };
+		A901E07C205506F600DA8825 /* WordList.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = WordList.cpp; sourceTree = "<group>"; };
+		A901E07E2055074500DA8825 /* provided.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = provided.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +63,8 @@
 			children = (
 				A901E0732054EA0500DA8825 /* main.cpp */,
 				A901E07B2054EA3B00DA8825 /* MyHash.h */,
+				A901E07C205506F600DA8825 /* WordList.cpp */,
+				A901E07E2055074500DA8825 /* provided.h */,
 			);
 			path = Cracked;
 			sourceTree = "<group>";
@@ -122,6 +127,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A901E0742054EA0500DA8825 /* main.cpp in Sources */,
+				A901E07D205506F600DA8825 /* WordList.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
