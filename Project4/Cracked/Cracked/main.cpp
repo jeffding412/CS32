@@ -20,5 +20,9 @@ int main() {
 //    hashTable.associate(3010, 900);
 //    hashTable.reset();
 //    cout << hashTable.getLoadFactor() << endl;
+    
+//    WordList myWordList;
+//    cout << myWordList.loadWordList("/Users/zhengfuding/Desktop/cs32/Project4/Cracked/Cracked/wordlist.txt") << endl;
+//    cout << myWordList.contains("aahed") << endl;
     cout << "Passed all tests" << endl;
 }

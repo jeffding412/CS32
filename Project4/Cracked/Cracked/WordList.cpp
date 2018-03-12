@@ -30,26 +30,42 @@ bool WordListImpl::loadWordList(string filename)
 {
     m_hashTable.reset();
     ifstream infile(filename);      // infile is a name of our choosing
-    if (!infile)                 // Did opening the file fail?
+    if (!infile)                    // Did opening the file fail?
     {
         return false;
     }
     string currentWord;
+    bool legalWord = true;
     while (getline(infile, currentWord)) {
         if (currentWord.size() > 0) {
+            // using transform() function and ::tolower in STL
+            transform(currentWord.begin(), currentWord.end(), currentWord.begin(), ::tolower);
             for (int i = 0; i < currentWord.size(); i++) {
                 if (isalpha(currentWord[i]) || currentWord[i] == '\'') {
-                    m_hashTable.associate(currentWord, currentWord);
+                    continue;
+                }
+                else {
+                    legalWord = false;
+                    break;
                 }
             }
+            if (legalWord) {
+                m_hashTable.associate(currentWord, currentWord);
+            }
+            legalWord = true;
         }
     }
-    return true;  // This compiles, but may not be correct
+    return true;
 }
 
 bool WordListImpl::contains(string word) const
 {
-    return false; // This compiles, but may not be correct
+    transform(word.begin(), word.end(), word.begin(), ::tolower);
+    if (m_hashTable.find(word) == nullptr) {
+        return false;
+    }
+    
+    return true;
 }
 
 vector<string> WordListImpl::findCandidates(string cipherWord, string currTranslation) const
