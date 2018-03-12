@@ -7,9 +7,13 @@
 //
 
 #include "provided.h"
+#include "MyHash.h"
 #include <functional>
 #include <string>
 #include <vector>
+#include <iostream>
+#include <fstream>
+#include <cctype>
 using namespace std;
 
 class WordListImpl
@@ -19,11 +23,28 @@ public:
     bool contains(string word) const;
     vector<string> findCandidates(string cipherWord, string currTranslation) const;
 private:
+    MyHash<string, string> m_hashTable;
 };
 
 bool WordListImpl::loadWordList(string filename)
 {
-    return false;  // This compiles, but may not be correct
+    m_hashTable.reset();
+    ifstream infile(filename);      // infile is a name of our choosing
+    if (!infile)                 // Did opening the file fail?
+    {
+        return false;
+    }
+    string currentWord;
+    while (getline(infile, currentWord)) {
+        if (currentWord.size() > 0) {
+            for (int i = 0; i < currentWord.size(); i++) {
+                if (isalpha(currentWord[i]) || currentWord[i] == '\'') {
+                    m_hashTable.associate(currentWord, currentWord);
+                }
+            }
+        }
+    }
+    return true;  // This compiles, but may not be correct
 }
 
 bool WordListImpl::contains(string word) const
