@@ -21,8 +21,8 @@ int main() {
 //    hashTable.reset();
 //    cout << hashTable.getLoadFactor() << endl;
     
-//    WordList myWordList;
-//    cout << myWordList.loadWordList("/Users/zhengfuding/Desktop/cs32/Project4/Cracked/Cracked/wordlist.txt") << endl;
-//    cout << myWordList.contains("aahed") << endl;
+    WordList myWordList;
+    cout << myWordList.loadWordList("/Users/zhengfuding/Desktop/cs32/Project4/Cracked/Cracked/wordlist.txt") << endl;
+    cout << myWordList.contains("zulu") << endl;
     cout << "Passed all tests" << endl;
 }

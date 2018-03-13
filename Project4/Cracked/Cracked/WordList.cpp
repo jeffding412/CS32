@@ -23,8 +23,31 @@ public:
     bool contains(string word) const;
     vector<string> findCandidates(string cipherWord, string currTranslation) const;
 private:
+    string createLetterPattern(string wordToChange) const;
     MyHash<string, string> m_hashTable;
 };
+
+string WordListImpl::createLetterPattern(string wordToChange) const
+{
+    string newLetterPattern = "";
+    int currentLetter = 97;
+    bool sameLetter = false;
+    for (int i = 0; i < wordToChange.size(); i++) {
+        for (int j = 0; j < i; j++) {
+            if (wordToChange[i] == wordToChange[j]) {
+                newLetterPattern += newLetterPattern[j];
+                sameLetter = true;
+                break;
+            }
+        }
+        if (!sameLetter) {
+            newLetterPattern += (char) currentLetter;
+            currentLetter++;
+        }
+        sameLetter = true;
+    }
+    return newLetterPattern;
+}
 
 bool WordListImpl::loadWordList(string filename)
 {
@@ -61,6 +84,7 @@ bool WordListImpl::loadWordList(string filename)
 bool WordListImpl::contains(string word) const
 {
     transform(word.begin(), word.end(), word.begin(), ::tolower);
+    
     if (m_hashTable.find(word) == nullptr) {
         return false;
     }
@@ -70,7 +94,33 @@ bool WordListImpl::contains(string word) const
 
 vector<string> WordListImpl::findCandidates(string cipherWord, string currTranslation) const
 {
-    return vector<string>();  // This compiles, but may not be correct
+    vector<string> samePatternWords;
+    
+    if (cipherWord.size() != currTranslation.size()) {
+        return samePatternWords;
+    }
+    
+    transform(cipherWord.begin(), cipherWord.end(), cipherWord.begin(), ::tolower);
+    transform(currTranslation.begin(), currTranslation.end(), currTranslation.begin(), ::tolower);
+    
+    for (int i = 0; i < cipherWord.size(); i++) {
+        if (isalpha(cipherWord[i]) || cipherWord[i] == '\'') {
+            continue;
+        }
+        return samePatternWords;
+    }
+    
+    for (int i = 0; i < currTranslation.size(); i++) {
+        if (isalpha(currTranslation[i]) || currTranslation[i] == '\'' || currTranslation[i] == '?') {
+            continue;
+        }
+        return samePatternWords;
+    }
+    
+    
+    
+    
+    return samePatternWords;  // This compiles, but may not be correct
 }
 
 //***** hash functions for string, int, and char *****
