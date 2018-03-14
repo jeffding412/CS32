@@ -24,22 +24,28 @@ public:
     vector<string> findCandidates(string cipherWord, string currTranslation) const;
 private:
     string createLetterPattern(string wordToChange) const;
-    MyHash<string, vector<string>> m_hashTable;
+    MyHash<string, vector<string>> m_hashTable; //maps a string letter pattern to a vector of strings with the same letter pattern
 };
 
+//returns a letter pattern for passed in string
 string WordListImpl::createLetterPattern(string wordToChange) const
 {
+    //empty string to store letter pattern
     string newLetterPattern = "";
-    int currentLetter = 97;
+    int currentLetter = 97; //sets current character to a
     bool sameLetter = false;
+    //iterate through size of wordToChange
     for (int i = 0; i < wordToChange.size(); i++) {
+        //iterate through previous letters
         for (int j = 0; j < i; j++) {
+            //if same letter, add previous used letter into newLetterPattern
             if (wordToChange[i] == wordToChange[j]) {
                 newLetterPattern += newLetterPattern[j];
                 sameLetter = true;
                 break;
             }
         }
+        //if not previously used, add new character into newLetterPattern
         if (!sameLetter) {
             newLetterPattern += (char) currentLetter;
             currentLetter++;
@@ -73,13 +79,16 @@ bool WordListImpl::loadWordList(string filename)
                 }
             }
             if (legalWord) {
+                //find the corresponding vector to letter pattern
                 vector<string> *tempVector = m_hashTable.find(createLetterPattern(currentWord));
                 if (tempVector == nullptr) {
+                    //create vector of strings, push currentWord into it, and put newVector into the hash
                     vector<string> newVector;
                     newVector.push_back(currentWord);
                     m_hashTable.associate(createLetterPattern(currentWord), newVector);
                 }
                 else {
+                    //push currentWord into the corresponding vector
                     tempVector->push_back(currentWord);
                 }
             }
@@ -91,15 +100,18 @@ bool WordListImpl::loadWordList(string filename)
 
 bool WordListImpl::contains(string word) const
 {
+    //change word to lowercase
     transform(word.begin(), word.end(), word.begin(), ::tolower);
     
+    //find corresponding vector to letter pattern
     const vector<string> *tempVector = m_hashTable.find(createLetterPattern(word));
-    cerr << tempVector->size() << endl;
+    
     if (tempVector == nullptr) {
         return false;
     }
     
     for (int i = 0; i < tempVector->size(); i++) {
+        //if specific word is found, return true
         if ((*tempVector)[i] == word) {
             return true;
         }
@@ -110,12 +122,14 @@ bool WordListImpl::contains(string word) const
 
 vector<string> WordListImpl::findCandidates(string cipherWord, string currTranslation) const
 {
+    //vector of strings of candidates
     vector<string> samePatternWords;
     
     if (cipherWord.size() != currTranslation.size()) {
         return samePatternWords;
     }
     
+    //transforms both parameters into lowercase
     transform(cipherWord.begin(), cipherWord.end(), cipherWord.begin(), ::tolower);
     transform(currTranslation.begin(), currTranslation.end(), currTranslation.begin(), ::tolower);
     
@@ -137,10 +151,13 @@ vector<string> WordListImpl::findCandidates(string cipherWord, string currTransl
     const vector<string> *tempVector = m_hashTable.find(cipherPattern);
     
     if (tempVector != nullptr) {
+        //iterate through the tempVector
         for (int i = 0; i < tempVector->size(); i++) {
             string newWord = (*tempVector)[i];
             bool match = true;
+            //iterate through newWord
             for (int x = 0; x < newWord.size(); x++) {
+                //if it doesn't match the currTranslation rules, set match to false
                 if (currTranslation[x] != '?') {
                     if (newWord[x] != currTranslation[x]) {
                         match = false;
@@ -154,7 +171,7 @@ vector<string> WordListImpl::findCandidates(string cipherWord, string currTransl
         }
     }
     
-    return samePatternWords;  // This compiles, but may not be correct
+    return samePatternWords;
 }
 
 //***** hash functions for string, int, and char *****

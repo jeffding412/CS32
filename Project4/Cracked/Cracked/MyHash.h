@@ -9,9 +9,6 @@
 #ifndef MyHash_h
 #define MyHash_h
 
-#include <iostream>
-using namespace std;
-
 template<typename KeyType, typename ValueType>
 class MyHash
 {

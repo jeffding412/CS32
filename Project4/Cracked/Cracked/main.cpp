@@ -21,24 +21,15 @@ int main() {
 //    hashTable.associate(3010, 900);
 //    cout << hashTable.getLoadFactor() << endl;
     
-    WordList myWordList;
-    cout << myWordList.loadWordList("/Users/zhengfuding/Desktop/cs32/Project4/Cracked/Cracked/wordlist.txt") << endl;
-    if (myWordList.contains("onomatopoeia")) {
-        cout << "I found the word" << endl;
-    }
+//    WordList myWordList;
+//    cout << myWordList.loadWordList("/Users/zhengfuding/Desktop/cs32/Project4/Cracked/Cracked/wordlist.txt") << endl;
 
     
-    string cipher = "xyqbbq";
-    string decodedSoFar = "?r????";
+    Translator t;
+    cout << t.pushMapping("DHL", "ERD") << endl;
 
-    vector<string> v = myWordList.findCandidates(cipher, decodedSoFar);
-    if (v.empty())
-        cout << "No matches found" << endl;
-    else
-        cout << "Found these matches:" << endl;
-
-    for (int k = 0; k < v.size(); k++)
-        cout << v[k] << endl; // writes grotto and troppo
-
+    cout << t.pushMapping("M", "S") << endl;
+    
+    
     cout << "Passed all tests" << endl;
 }
