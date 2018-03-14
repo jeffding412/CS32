@@ -9,6 +9,9 @@
 #ifndef MyHash_h
 #define MyHash_h
 
+#include <iostream>
+using namespace std;
+
 template<typename KeyType, typename ValueType>
 class MyHash
 {
@@ -161,7 +164,7 @@ void MyHash<KeyType, ValueType>::associate(const KeyType& key, const ValueType& 
                 m_buckets[i] = nullptr;
             }
         }
-        delete m_buckets;
+        delete [] m_buckets;
         m_buckets = newBucket;
     }
 }
@@ -175,9 +178,7 @@ const ValueType* MyHash<KeyType, ValueType>::find(const KeyType& key) const
     Node *p = m_buckets[targetBucketNumber];
     while (p != nullptr) {
         if (p->m_key == key) {
-            ValueType* valuePtr;
-            valuePtr = &p->m_value;
-            return valuePtr;
+            return &p->m_value;
         }
         p = p->next;
     }

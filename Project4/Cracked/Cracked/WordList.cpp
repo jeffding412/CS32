@@ -24,7 +24,7 @@ public:
     vector<string> findCandidates(string cipherWord, string currTranslation) const;
 private:
     string createLetterPattern(string wordToChange) const;
-    MyHash<string, string> m_hashTable;
+    MyHash<string, vector<string>> m_hashTable;
 };
 
 string WordListImpl::createLetterPattern(string wordToChange) const
@@ -44,7 +44,7 @@ string WordListImpl::createLetterPattern(string wordToChange) const
             newLetterPattern += (char) currentLetter;
             currentLetter++;
         }
-        sameLetter = true;
+        sameLetter = false;
     }
     return newLetterPattern;
 }
@@ -73,7 +73,15 @@ bool WordListImpl::loadWordList(string filename)
                 }
             }
             if (legalWord) {
-                m_hashTable.associate(currentWord, currentWord);
+                vector<string> *tempVector = m_hashTable.find(createLetterPattern(currentWord));
+                if (tempVector == nullptr) {
+                    vector<string> newVector;
+                    newVector.push_back(currentWord);
+                    m_hashTable.associate(createLetterPattern(currentWord), newVector);
+                }
+                else {
+                    tempVector->push_back(currentWord);
+                }
             }
             legalWord = true;
         }
@@ -85,11 +93,19 @@ bool WordListImpl::contains(string word) const
 {
     transform(word.begin(), word.end(), word.begin(), ::tolower);
     
-    if (m_hashTable.find(word) == nullptr) {
+    const vector<string> *tempVector = m_hashTable.find(createLetterPattern(word));
+    cerr << tempVector->size() << endl;
+    if (tempVector == nullptr) {
         return false;
     }
     
-    return true;
+    for (int i = 0; i < tempVector->size(); i++) {
+        if ((*tempVector)[i] == word) {
+            return true;
+        }
+    }
+    
+    return false;
 }
 
 vector<string> WordListImpl::findCandidates(string cipherWord, string currTranslation) const
@@ -117,8 +133,26 @@ vector<string> WordListImpl::findCandidates(string cipherWord, string currTransl
         return samePatternWords;
     }
     
+    string cipherPattern = createLetterPattern(cipherWord);
+    const vector<string> *tempVector = m_hashTable.find(cipherPattern);
     
-    
+    if (tempVector != nullptr) {
+        for (int i = 0; i < tempVector->size(); i++) {
+            string newWord = (*tempVector)[i];
+            bool match = true;
+            for (int x = 0; x < newWord.size(); x++) {
+                if (currTranslation[x] != '?') {
+                    if (newWord[x] != currTranslation[x]) {
+                        match = false;
+                    }
+                }
+            }
+            if (match) {
+                samePatternWords.push_back(newWord);
+            }
+            match = true;
+        }
+    }
     
     return samePatternWords;  // This compiles, but may not be correct
 }

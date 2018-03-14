@@ -10,6 +10,8 @@
 		A901E0742054EA0500DA8825 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A901E0732054EA0500DA8825 /* main.cpp */; };
 		A901E07D205506F600DA8825 /* WordList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A901E07C205506F600DA8825 /* WordList.cpp */; };
 		A901E0802055B34C00DA8825 /* Tokenizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A901E07F2055B34C00DA8825 /* Tokenizer.cpp */; };
+		A952D1F320588A6700258912 /* Decrypter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A952D1F220588A6700258912 /* Decrypter.cpp */; };
+		A952D1F520588A6F00258912 /* Translator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A952D1F420588A6F00258912 /* Translator.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -31,6 +33,8 @@
 		A901E07C205506F600DA8825 /* WordList.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = WordList.cpp; sourceTree = "<group>"; };
 		A901E07E2055074500DA8825 /* provided.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = provided.h; sourceTree = "<group>"; };
 		A901E07F2055B34C00DA8825 /* Tokenizer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Tokenizer.cpp; sourceTree = "<group>"; };
+		A952D1F220588A6700258912 /* Decrypter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Decrypter.cpp; sourceTree = "<group>"; };
+		A952D1F420588A6F00258912 /* Translator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Translator.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +72,8 @@
 				A901E07C205506F600DA8825 /* WordList.cpp */,
 				A901E07E2055074500DA8825 /* provided.h */,
 				A901E07F2055B34C00DA8825 /* Tokenizer.cpp */,
+				A952D1F220588A6700258912 /* Decrypter.cpp */,
+				A952D1F420588A6F00258912 /* Translator.cpp */,
 			);
 			path = Cracked;
 			sourceTree = "<group>";
@@ -129,6 +135,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A952D1F320588A6700258912 /* Decrypter.cpp in Sources */,
+				A952D1F520588A6F00258912 /* Translator.cpp in Sources */,
 				A901E0802055B34C00DA8825 /* Tokenizer.cpp in Sources */,
 				A901E0742054EA0500DA8825 /* main.cpp in Sources */,
 				A901E07D205506F600DA8825 /* WordList.cpp in Sources */,
