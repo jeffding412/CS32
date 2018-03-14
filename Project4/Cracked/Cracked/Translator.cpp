@@ -59,6 +59,14 @@ bool TranslatorImpl::pushMapping(string ciphertext, string plaintext)
         newMap[ciphertext[i]] = plaintext[i];
     }
     
+    for (it = newMap.begin(); it != newMap.end(); it++) {
+        cout << it->first << it->second << endl;
+    }
+    
+    for (it = currentMap.begin(); it != currentMap.end(); it++) {
+        cout << it->first << it->second << endl;
+    }
+    
     m_stack.push_back(newMap);
     
     return true;
@@ -66,7 +74,12 @@ bool TranslatorImpl::pushMapping(string ciphertext, string plaintext)
 
 bool TranslatorImpl::popMapping()
 {
-    return false;  // This compiles, but may not be correct
+    if (m_stack.empty()) {
+        return false;
+    }
+    
+    m_stack.pop_back();
+    return true;
 }
 
 string TranslatorImpl::getTranslation(const string& ciphertext) const

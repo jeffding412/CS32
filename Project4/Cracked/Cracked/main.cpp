@@ -27,7 +27,6 @@ int main() {
     
     Translator t;
     cout << t.pushMapping("DHL", "ERD") << endl;
-
     cout << t.pushMapping("M", "S") << endl;
     
     
