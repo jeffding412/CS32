@@ -25,10 +25,16 @@ int main() {
 //    cout << myWordList.loadWordList("/Users/zhengfuding/Desktop/cs32/Project4/Cracked/Cracked/wordlist.txt") << endl;
 
     
-    Translator t;
-    cout << t.pushMapping("DHL", "ERD") << endl;
-    cout << t.pushMapping("M", "S") << endl;
-    
+//    Translator t;
+//    cout << t.pushMapping("DHL", "ERD") << endl;
+//    string secret = "Hdqlx!";
+//    cout << t.getTranslation(secret) << endl;
+//    t.pushMapping("QX", "AY"); // Q->A, X->Y
+//    cout << t.getTranslation(secret) << endl;
+//    t.popMapping();
+//    cout << t.getTranslation(secret) << endl;
+//    t.popMapping();
+//    cout << t.getTranslation(secret) << endl;
     
     cout << "Passed all tests" << endl;
 }

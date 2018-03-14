@@ -1,7 +1,7 @@
 #include "provided.h"
 #include <string>
 #include <map>
-#include <iostream>
+#include <cctype>
 using namespace std;
 
 class TranslatorImpl
@@ -59,14 +59,6 @@ bool TranslatorImpl::pushMapping(string ciphertext, string plaintext)
         newMap[ciphertext[i]] = plaintext[i];
     }
     
-    for (it = newMap.begin(); it != newMap.end(); it++) {
-        cout << it->first << it->second << endl;
-    }
-    
-    for (it = currentMap.begin(); it != currentMap.end(); it++) {
-        cout << it->first << it->second << endl;
-    }
-    
     m_stack.push_back(newMap);
     
     return true;
@@ -84,7 +76,51 @@ bool TranslatorImpl::popMapping()
 
 string TranslatorImpl::getTranslation(const string& ciphertext) const
 {
-    return ""; // This compiles, but may not be correct
+    string localCipherText = ciphertext;
+    string translatedString = "";
+    
+    //store which indices were uppercase
+    bool upperCaseIndex[localCipherText.size()];
+    for (int i = 0; i < localCipherText.size(); i++) {
+        if (isupper(localCipherText[i])) {
+            upperCaseIndex[i] = true;
+        }
+        else {
+            upperCaseIndex[i] = false;
+        }
+    }
+    
+    //changes localCipherText to lowercase
+    transform(localCipherText.begin(), localCipherText.end(), localCipherText.begin(), ::tolower);
+    
+    map<char, char> currentMap;
+    map<char, char>::iterator it;
+    //if there is something in the vector, set currentMap to most current map
+    if (m_stack.size() != 0) {
+        currentMap = m_stack.back();
+    }
+    
+    //iterate through currentMap and check if any character gets repeated
+    for (int i = 0; i < localCipherText.size(); i++) {
+        if (!isalpha(localCipherText[i])) {
+            translatedString += localCipherText[i];
+            continue;
+        }
+        it = currentMap.find(localCipherText[i]);
+        if (it == currentMap.end()) {
+            translatedString += '?';
+        }
+        else {
+            if (upperCaseIndex[i]) {
+                translatedString += toupper(it->second);
+            }
+            else {
+                translatedString += it->second;
+            }
+        }
+    }
+    
+    return translatedString; // This compiles, but may not be correct
 }
 
 //******************** Translator functions ************************************
