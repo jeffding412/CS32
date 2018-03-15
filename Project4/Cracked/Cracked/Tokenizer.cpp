@@ -31,18 +31,20 @@ TokenizerImpl::TokenizerImpl(string separators)
 //returns a vector of strings without the separators
 vector<string> TokenizerImpl::tokenize(const std::string& s) const
 {
+    string newWord = s;
+    newWord += ' ';
     vector<string> tokens;      //vector of strings
     int startIndex = 0;
     int numCharsInString = 0;
     //iterate through string s
-    for (int i = 0; i < s.size(); i++) {
+    for (int i = 0; i < newWord.size(); i++) {
         //iterate through the vector of chars
         for (int j = 0; j < m_separators.size(); j++) {
             //if the current character is a seperator
-            if (s[i] == m_separators[j]) {
+            if (newWord[i] == m_separators[j]) {
                 //if the string isn't empty, push the substring into tokens
                 if (numCharsInString != 0) {
-                    tokens.push_back(s.substr(startIndex, numCharsInString));
+                    tokens.push_back(newWord.substr(startIndex, numCharsInString));
                 }
                 startIndex = i + 1;
                 numCharsInString = -1;

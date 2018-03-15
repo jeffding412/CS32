@@ -6,11 +6,9 @@
 //  Copyright © 2018 Zhengfu Ding. All rights reserved.
 //
 
-#include <iostream>
-#include "MyHash.h"
 #include "provided.h"
+#include <iostream>
 #include <string>
-#include <cassert>
 using namespace std;
 
 int main() {
@@ -35,6 +33,10 @@ int main() {
 //    cout << t.getTranslation(secret) << endl;
 //    t.popMapping();
 //    cout << t.getTranslation(secret) << endl;
-    
+    Decrypter myDecrypter;
+    cout << myDecrypter.load("/Users/zhengfuding/Desktop/cs32/Project4/Cracked/Cracked/wordlist.txt") << endl;
+
+//    myDecrypter.crack("Vxgvab sovi jh pjhk cevc andi ngh iobnxdcjnh cn bdttook jb pnio jpfnicvhc cevh vha nceoi nho cejhy.");
+    myDecrypter.crack("y qook ra bdttook yqkook.");
     cout << "Passed all tests" << endl;
 }

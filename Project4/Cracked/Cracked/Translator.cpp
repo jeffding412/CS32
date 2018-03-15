@@ -2,6 +2,7 @@
 #include <string>
 #include <map>
 #include <cctype>
+#include <iostream>
 using namespace std;
 
 class TranslatorImpl
@@ -24,14 +25,33 @@ bool TranslatorImpl::pushMapping(string ciphertext, string plaintext)
     transform(ciphertext.begin(), ciphertext.end(), ciphertext.begin(), ::tolower);
     transform(plaintext.begin(), plaintext.end(), plaintext.begin(), ::tolower);
     
-    //iterate through each letter in both parameters
+    string protoCipher = "";
+    string protoPlain = "";
+    
+    bool repeat = false;
     for (int i = 0; i < ciphertext.size(); i++) {
-        if (!isalpha(ciphertext[i]) || !isalpha(plaintext[i])) {
+        for (int j = 0; j < i; j++) {
+            if (ciphertext[i] == ciphertext[j]) {
+                if (plaintext[i] == plaintext[j]) {
+                    repeat = true;
+                }
+            }
+        }
+        if (!repeat) {
+            protoCipher += ciphertext[i];
+            protoPlain += plaintext[i];
+        }
+        repeat = false;
+    }
+    
+    //iterate through each letter in both parameters
+    for (int i = 0; i < protoCipher.size(); i++) {
+        if (!isalpha(protoCipher[i]) || !isalpha(protoPlain[i])) {
             return false;
         }
         //if a letter is repeated in both, return false
         for (int j = 0; j < i; j++) {
-            if (ciphertext[i] == ciphertext[j] || plaintext[i] == plaintext[j]) {
+            if (protoCipher[i] == protoCipher[j] || protoPlain[i] == protoPlain[j]) {
                 return false;
             }
         }
@@ -46,8 +66,8 @@ bool TranslatorImpl::pushMapping(string ciphertext, string plaintext)
     
     //iterate through currentMap and check if any character gets repeated
     for (it = currentMap.begin(); it != currentMap.end(); it++) {
-        for (int i = 0; i < ciphertext.size(); i++) {
-            if (it->first == ciphertext[i] || it->second == plaintext[i]) {
+        for (int i = 0; i < protoCipher.size(); i++) {
+            if (it->first == protoCipher[i] || it->second == protoPlain[i]) {
                 return false;
             }
         }
@@ -55,8 +75,8 @@ bool TranslatorImpl::pushMapping(string ciphertext, string plaintext)
     
     //copy currentMap into a newMap (don't want to modify currentMap)
     map<char, char> newMap(currentMap);
-    for (int i = 0; i < ciphertext.size(); i++) {
-        newMap[ciphertext[i]] = plaintext[i];
+    for (int i = 0; i < protoCipher.size(); i++) {
+        newMap[protoCipher[i]] = protoPlain[i];
     }
     
     m_stack.push_back(newMap);
@@ -100,16 +120,20 @@ string TranslatorImpl::getTranslation(const string& ciphertext) const
         currentMap = m_stack.back();
     }
     
-    //iterate through currentMap and check if any character gets repeated
+    //iterate through localCipherText
     for (int i = 0; i < localCipherText.size(); i++) {
+        //If the ciphertext character is not a letter, that character appears, unchanged.
         if (!isalpha(localCipherText[i])) {
             translatedString += localCipherText[i];
             continue;
         }
+        //find the letter necessary
         it = currentMap.find(localCipherText[i]);
+        //If the ciphertext character is a letter with an unknown translation in the current mapping, a ? appears.
         if (it == currentMap.end()) {
             translatedString += '?';
         }
+        //If the ciphertext character is a letter that maps to a plaintext letter in the current mapping, then that plaintext letter appears, in the same case as in the ciphertext string.
         else {
             if (upperCaseIndex[i]) {
                 translatedString += toupper(it->second);
