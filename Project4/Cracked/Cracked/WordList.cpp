@@ -11,7 +11,7 @@
 #include <functional>
 #include <string>
 #include <vector>
-#include <iostream>
+#include <algorithm>
 #include <fstream>
 #include <cctype>
 using namespace std;

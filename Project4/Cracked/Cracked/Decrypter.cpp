@@ -1,7 +1,6 @@
 #include "provided.h"
 #include <string>
 #include <vector>
-#include <iostream>
 #include <algorithm>
 #include <cctype>
 using namespace std;
@@ -37,7 +36,7 @@ string DecrypterImpl::chooseWord(vector<string> words)
         translatedWords.push_back(m_translator.getTranslation(words[i]));
     }
     
-    int numUnknown[words.size()];
+    vector<int> numUnknown;
     
     //counts how many unknown letters are in each word
     for (int i = 0; i < translatedWords.size(); i++) {
@@ -47,7 +46,7 @@ string DecrypterImpl::chooseWord(vector<string> words)
                 count++;
             }
         }
-        numUnknown[i] = count;
+        numUnknown.push_back(count);
     }
     
     //int that holds which index has the most unknown letters
@@ -110,12 +109,12 @@ vector<string> DecrypterImpl::crack(const string& ciphertext)
         if (!m_translator.pushMapping(mostUnknownCipherFragement, possibleMatches[i])) {
             continue;
         }
-        cerr << mostUnknownCipherFragement << endl;
-        cerr << possibleMatches[i] << endl;
+//        cerr << mostUnknownCipherFragement << endl;
+//        cerr << possibleMatches[i] << endl;
         
         possiblePhrase = m_translator.getTranslation(ciphertext);
         
-        cerr << possiblePhrase << endl;
+//        cerr << possiblePhrase << endl;
         if (!checkValid(possiblePhrase)) {
             m_translator.popMapping();
             continue;

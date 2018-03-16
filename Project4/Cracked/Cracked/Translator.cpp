@@ -2,7 +2,7 @@
 #include <string>
 #include <map>
 #include <cctype>
-#include <iostream>
+#include <algorithm>
 using namespace std;
 
 class TranslatorImpl
@@ -100,13 +100,13 @@ string TranslatorImpl::getTranslation(const string& ciphertext) const
     string translatedString = "";
     
     //store which indices were uppercase
-    bool upperCaseIndex[localCipherText.size()];
+    vector<bool> upperCaseIndex;
     for (int i = 0; i < localCipherText.size(); i++) {
         if (isupper(localCipherText[i])) {
-            upperCaseIndex[i] = true;
+            upperCaseIndex.push_back(true);
         }
         else {
-            upperCaseIndex[i] = false;
+            upperCaseIndex.push_back(false);
         }
     }
     
@@ -144,7 +144,7 @@ string TranslatorImpl::getTranslation(const string& ciphertext) const
         }
     }
     
-    return translatedString; // This compiles, but may not be correct
+    return translatedString;
 }
 
 //******************** Translator functions ************************************
